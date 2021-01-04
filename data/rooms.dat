@@ -1,0 +1,9 @@
+Room Name: Clearing
+Room Description:  You are in a large field with a sign in front of you. There is a path heading east into a forest.
+Exit Rooms: E-West forest
+Room Name: West forest
+Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A lader hangs from the base of one of the trees.
+Exit Rooms: W-Clearing, E-Centre of Forest, U-Tree top
+Room Name: Tree top
+Room Description:  You are at tree top.
+Exit Rooms: D-West forest

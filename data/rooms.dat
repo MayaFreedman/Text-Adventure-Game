@@ -1,9 +1,15 @@
 Room Name: Clearing
 Room Description:  You are in a large field with a sign in front of you. There is a path heading east into a forest.
 Exit Rooms: E-West forest
-Room Name: West forest
+Room Name: West Forest
 Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A lader hangs from the base of one of the trees.
-Exit Rooms: W-Clearing, E-Centre of Forest, U-Tree top
-Room Name: Tree top
-Room Description:  You are at tree top.
-Exit Rooms: D-West forest
+Exit Rooms: W-Clearing, U-Tree Top
+Room Name: Tree Top
+Room Description:  You standing on a small wooden platform on top of a tree. There is a bridge leading south.
+Exit Rooms: D-West Forest, S-East Hut
+Room Name: East Hut
+Room Description: You are standing in a small wooden hut. There are bridges leading north and west.
+Exit Rooms: N-Tree Top, W-Centre of Bridge
+Room Name: Centre of Bridge
+Room Description: You are standing in the centre of a wooden rickety bridge heading East and West. A second bridge connects this bridge heading south
+Exit Rooms: W-West Hut, E-East Hut

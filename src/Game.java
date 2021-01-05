@@ -96,7 +96,7 @@ public class Game {
   public Game() {
     try {
       initRooms("data/rooms.dat");
-      currentRoom = masterRoomMap.get("CLEARING");
+      currentRoom = masterRoomMap.get("FIELD");
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -108,7 +108,7 @@ public class Game {
   public void setItems() {
     Item items[] = { new Item("couch", 25), new Item("table", 25), new Item("cloak", 1), new Item("chest", 25, "false",
         "You open the chest, there is a cloak sitting inside the chest", new Item("cloak_V2", 1)) };
-    masterRoomMap.get("TREE_TOP").addItems(items);
+    masterRoomMap.get("NORTH_TREE_TOP").addItems(items);
   }
 
   /**

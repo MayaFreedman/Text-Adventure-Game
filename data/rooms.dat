@@ -1,15 +1,54 @@
 Room Name: Clearing
 Room Description:  You are in a large field with a sign in front of you. There is a path heading east into a forest.
-Exit Rooms: E-West forest
-Room Name: West Forest
+Exit Rooms: E-Forest, S-Outside Building
+Room Name: Forest
 Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A lader hangs from the base of one of the trees.
-Exit Rooms: W-Clearing, U-Tree Top
-Room Name: Tree Top
+Exit Rooms: W-Clearing, U-North Tree Top, E-Field
+Room Name: North Tree Top
 Room Description:  You standing on a small wooden platform on top of a tree. There is a bridge leading south.
-Exit Rooms: D-West Forest, S-East Hut
+Exit Rooms: D-Forest, S-east Hut
 Room Name: East Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and west.
-Exit Rooms: N-Tree Top, W-Centre of Bridge
-Room Name: Centre of Bridge
-Room Description: You are standing in the centre of a wooden rickety bridge heading East and West. A second bridge connects this bridge heading south
-Exit Rooms: W-West Hut, E-East Hut
+Exit Rooms: N-North Tree Top, W-Center of Bridge
+Room Name: Center of Bridge
+Room Description: You are standing in the center of a wooden rickety bridge heading east and west. A second bridge connects this bridge heading south.
+Exit Rooms: W-west Hut, E-east Hut
+Room Name: West Hut
+Room Description: You are standing in a small wooden hut. There are bridges leading north and east.
+Exit Rooms: N-Dark Room, E-Center of Bridge
+Room Name: Dark Room
+Room Description: You are standing in a dark room, the only light source coming from a dim fire in the center of the room.
+Exit Rooms: S-West Hut
+Room Name: Field
+Room Description: You are in a field with a tall grey wall blocking the path to the east.
+Exit Rooms: W-Forest, E-Beach
+Room Name: Beach
+Room Description: You are standing on a sandy beach with a lake to the south.
+Exit Rooms: S-Shallow Water, W-Field
+Room Name: Shallow Water
+Room Description: You are in the shallow part of a lake. To the south, you see that the lake gets deeper and you will not be able to stand.
+Exit Rooms: S-Deep Water, N-Beach
+Room Name: Deep Water
+Room Description: You are underwater at the deepest point in the lake. There is a rock to your right with a small opening
+Exit Rooms: N-Shallow Water, E-Underwater Cove
+Room Name: Underwater Cove
+Room Decription: You are in an underwater cove filled with random objects floating around.
+Exit Rooms: W-Deep Water
+Room Name: Outside Building
+Room Description: You are outside of the door to a building blocking the path west. There is a mailbox next to the door. In the north you can spot a parking lot. In the East you see a busy street.
+Exit Rooms: N-Clearing, E-Busy Street, S-Parking lot
+Room Name: Parking Lot
+Room Description: You are in an empty parking lot, with only one car in the lot. To the north you see the front of a building, to your east you see a beautiful park.
+Exit Rooms: N-Outside Building, E-City Park
+Room Name: Busy Street
+Room Description: You are in the middle of a busy street. To the south you see a beautiful park, to the west you see the outside of a white building.
+Exit Rooms: S-City Park, W-Outside Building
+Room Name: City Park
+Room Description: You are standing on the south side of a park full of trees. To the north lies a busy street and a parking lot for park visitors is in the west.
+Exit Rooms: N-Busy Street, W-Parking Lot
+Room Name: Hidden Hut
+Room Description: You are in the center of a small wooden hut, with strange engravings around the room.
+Exit Rooms: N-Center of Bridge, E-South Tree Top
+Room Name: South Tree Top
+Room Description: You are on top of a large tree. There is a staircase carved into the trunk leading down.
+Exit Rooms: D-City Park, W-Hidden Hut

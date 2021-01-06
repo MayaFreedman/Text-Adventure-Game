@@ -1,13 +1,15 @@
 public class Item {
     private String name;
     private int weight;
-    private String isOpened;
+    private boolean isOpened;
     private String openMessage;
     private Item innerItem;
-    
+    private String description;
+    private String readMessage;
+    private String inRoom;
     
     /*
-    * Constructor: Used for ordinary Items that only need a name and weight
+    * Constructor: Used for ordinary ttems that only need a name and weight (items that cannot be picked up)
     */
     public Item(String name, int weight){
         this.name = name;
@@ -15,14 +17,50 @@ public class Item {
     }
 
     /*
-    * Constructor: Used for Items that open and close
+    * Constructor: Used for ordinary items that need a name, weight, description and a message for 
+    * when it's in a room (Items that can be picked up)
+    */
+    public Item(String name, String inRoom, int weight, String description){
+        this.name = name;
+        this.inRoom = inRoom;
+        this.weight = weight;
+        this.description = description;
+    }
+
+    /*
+    * Constructor: Used for items that open and close
     */    
-    public Item(String name, int weight, String isOpened, String openMessage, Item innerItem){
+    public Item(String name, int weight, boolean isOpened, String openMessage, Item innerItem, String description){
         this.name = name;
         this.weight = weight;
         this.isOpened = isOpened;
         this.openMessage = openMessage;
         this.innerItem = innerItem;
+        this.description = description;
+    }
+
+    /*
+    * Constructor: Used for items that can be read by the user
+    */
+    public Item(String name, int weight, String readMessage, String description){
+        this.name = name;
+        this.weight = weight;
+        this.readMessage = readMessage;
+        this.description = description;
+    }
+
+    /*
+    Returns this item's read message
+    */
+    public String getReadMessage(){
+        return readMessage;
+    }
+
+    /*
+    * Returns a description of this item
+    */
+    public String getDescription(){
+        return name + " description: " + description;
     }
 
     public String getName(){
@@ -33,7 +71,7 @@ public class Item {
         return weight;
     }
 
-    public String getIsOpened(){
+    public boolean getIsOpened(){
         return isOpened;
     }
 
@@ -41,7 +79,7 @@ public class Item {
         return openMessage;
     }
 
-    public void setIsOpened(String isOpened){
+    public void setIsOpened(boolean isOpened){
         this.isOpened = isOpened;
     }
 

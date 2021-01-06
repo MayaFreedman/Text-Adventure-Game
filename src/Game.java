@@ -106,9 +106,18 @@ public class Game {
   }
 
   public void setItems() {
-    Item items[] = { new Item("couch", 25), new Item("table", 25), new Item("cloak", 1), new Item("chest", 25, "false",
-        "You open the chest, there is a cloak sitting inside the chest", new Item("cloak_V2", 1)) };
-    masterRoomMap.get("NORTH_TREE_TOP").addItems(items);
+    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest",
+        25, false, "You open the chest, there is a cloak sitting inside the chest", new Item("cloak", 1, "this is a magical blue cloak that allows whoever posseses it to walk through walls that have a blue detail on them", "there is a cloak on the floor"), null) };
+    masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
+
+    String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
+    Item fieldItems[] = { new Item("sign", 25, message, "") };
+    masterRoomMap.get("FIELD").addItems(fieldItems);
+
+    Item insideBuildingItmes[] = {};
+
+    Item northDeadEndItems [] = { new Item("engraving", 25, "4 9 2 0", " ")};
+    masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
   }
 
   /**
@@ -186,7 +195,27 @@ public class Game {
       viewInventory(command);
     else if (commandWord.equals("open"))
       openItem(command);
+    else if (commandWord.equals("read"))
+      readItem(command);
     return false;
+  }
+
+  private void readItem(Command command) {
+    Item item;
+    int roomIndex = currentRoom.inRoom(command.getSecondWord());
+    int inventoryIndex = inventory.findItem(command.getSecondWord());
+    if (roomIndex < 0 && inventoryIndex < 0)
+      System.out.println("There is no item that you can see");
+    else {
+      if (inventoryIndex > 0)
+        item = inventory.getItem(inventoryIndex);
+      else
+        item = currentRoom.getItem(roomIndex);
+      if (item.getReadMessage() == null)
+        System.out.println("This item cannot be read");
+      else
+        System.out.println("The " + item.getName() + " says: " + item.getReadMessage());
+    }
   }
 
   private void openItem(Command command) {
@@ -198,25 +227,33 @@ public class Game {
         System.out.println("There is no item with that name in this room");
       else {
         Item item = currentRoom.getItem(index);
-        if (item.getIsOpened() == null)
+        if (item.getInnerItem() == null)
           System.out.println("This item can't be oppened");
-        else if (item.getIsOpened().equals("true"))
+        else if (item.getIsOpened())
           System.out.println("This item is already oppened");
         else
           System.out.println(item.getOpenMessage());
-        item.setIsOpened("true");
+        item.setIsOpened(true);
       }
     }
   }
 
-  // viewInventory: Allows the user to view all items in their inventory
+  // viewInventory: Allows the user to view all items in their inventory or a specific item in their inventory
   private void viewInventory(Command command) {
     if (!command.hasSecondWord())
       System.out.println("What do you want to view?");
-    else if (!command.getSecondWord().equals("inventory"))
-      System.out.println("View what?");
-    else
+    else if (command.getSecondWord().equals("inventory"))
       System.out.println(inventory.showInventory());
+    else {
+      Item item;
+      int inventoryIndex = inventory.findItem(command.getSecondWord());
+      if (inventoryIndex < 0)
+        System.out.println("You do not have that in your inventory");
+      else {
+        item = inventory.getItem(inventoryIndex);
+        System.out.println(item.getDescription());
+      }
+    }
   }
 
   /*
@@ -234,15 +271,16 @@ public class Game {
         Item item = inventory.getItem(index);
         currentRoom.addItem(item);
         inventory.removeItem(item);
-        System.out.println("Item dropped");
+        System.out.println(item.getName() + " dropped");
       }
 
     }
   }
 
   /*
-   * takeItem: Allows the user to take an item if it's in the room, not in a closed object, and not too
-   * heavy that it's inventory weight is over a specific value (maxWeight)
+   * takeItem: Allows the user to take an item if it's in the room, not in a
+   * closed object, and not too heavy that it's inventory weight is over a
+   * specific value (maxWeight)
    */
   private void takeItem(Command command) {
     if (!command.hasSecondWord())
@@ -255,7 +293,7 @@ public class Game {
         ArrayList<Item> itemList = currentRoom.getItemList();
         for (int i = 0; i < itemList.size(); i++) {
           Item item = itemList.get(i);
-          if (item.getIsOpened() != null && item.getIsOpened().equals("true") && item.getInnerItem().compareItemNames(secondWord)) {
+          if (item.getInnerItem() != null && item.getIsOpened() && item.getInnerItem().compareItemNames(secondWord)) {
             Item innerItem = item.getInnerItem();
             currentRoom.removeItem(innerItem);
             inventory.addItem(innerItem);
@@ -316,8 +354,9 @@ public class Game {
     // Try to leave current room.
     Room nextRoom = currentRoom.nextRoom(direction);
     if (nextRoom == null)
-      System.out.println("There is no door!");
-      //Checks for specific cases where the user must possess an item in order to move from one room to another
+      System.out.println("There is no path leading that direction");
+    // Checks for specific cases where the user must possess an item in order to
+    // move from one room to another
     else if (currentRoom.getRoomName().equals("Room 1") && nextRoom.getRoomName().equals("Room 2")
         && inventory.findItem("cloak") < 0)
       System.out.println("You can't walk through walls, if only there was an item that let you do that ...");

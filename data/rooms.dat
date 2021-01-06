@@ -5,7 +5,7 @@ Room Name: Forest
 Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A lader hangs from the base of one of the trees.
 Exit Rooms: W-Clearing, U-North Tree Top, E-Field
 Room Name: North Tree Top
-Room Description:  You standing on a small wooden platform on top of a tree. There is a bridge leading south.
+Room Description:  You standing on a small wooden platform on top of a tree. There is a couch and table sitting on the platform. There is a bridge leading south.
 Exit Rooms: D-Forest, S-east Hut
 Room Name: East Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and west.

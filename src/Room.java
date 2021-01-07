@@ -23,6 +23,7 @@ public class Room {
   private HashMap<String, Room> exits; // stores exits of this room.
   private ArrayList <Item> itemList; // stores all items in this room
   private ArrayList <Pokemon> pokemonList; // stores all pokemon in this room
+  private boolean isLit;
 
   /**
    * Create a room described "description". Initially, it has no exits.
@@ -39,6 +40,7 @@ public class Room {
     description = "DEFAULT DESCRIPTION";
     exits = new HashMap<String, Room>();
     itemList = new ArrayList <Item>();
+    isLit = true;
   }
   
 
@@ -128,6 +130,14 @@ public class Room {
     return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\nItems in room :" + x;
   }
 
+  /*
+  * Returns a description of this room in the event it is not lit and the
+  * player cannot see anything
+  */
+  public String darkDescription(){
+    return "Room: " + roomName + "\n\n" + "It is dark in this room, you cannot see anything";
+  }
+
   /**
    * Return a string describing the room's exits, for example "Exits: north west
    */
@@ -193,6 +203,20 @@ public class Room {
 
   public String getRoomName() {
     return roomName;
+  }
+
+  /*
+  changes the light status in the room (true -> lit, false -> dark)
+  */
+  public void changeIsLit(boolean isLit){
+    this.isLit = isLit;
+  }
+
+  /*
+  * Returns if the room is lit or not (true -> it's lit, false -> it's not lit)
+  */
+  public boolean getIsLit(){
+    return isLit;
   }
 
   public void setRoomName(String roomName) {

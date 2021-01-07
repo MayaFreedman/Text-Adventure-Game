@@ -1,3 +1,5 @@
+import org.w3c.dom.NameList;
+
 public class Item {
     private String name;
     private int weight;
@@ -7,6 +9,8 @@ public class Item {
     private String description;
     private String readMessage;
     private String inRoom;
+    private boolean isOn;
+    private boolean canTurnOn;
     
     /*
     * Constructor: Used for ordinary ttems that only need a name and weight (items that cannot be picked up)
@@ -47,6 +51,38 @@ public class Item {
         this.weight = weight;
         this.readMessage = readMessage;
         this.description = description;
+    }
+
+    /*
+    * Constructor: Used for items that can be turned on and off
+    */
+    public Item(String name, int weight, boolean canTurnOn, boolean isOn){
+        this.name = name;
+        this.weight = weight;
+        this.canTurnOn = true;
+        this.isOn = isOn;
+    }
+
+    /*
+    Returns the on (true) or off(false) status of this item, returns null if it can't
+    turn on and off
+    */
+    public boolean getIsOn(){
+        return isOn;
+    }
+
+    /*
+    Changes the status of the item to off (false) or on (true)
+    */
+    public void changeIsOn(boolean isOn){
+        this.isOn = isOn;
+    }
+
+    /*
+    *Returns a boolean describing whether or not this item has the ability to turn on
+    */
+    public boolean getCanTurnOn(){
+        return canTurnOn;
     }
 
     /*

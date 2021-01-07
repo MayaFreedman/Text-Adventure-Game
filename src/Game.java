@@ -106,18 +106,25 @@ public class Game {
   }
 
   public void setItems() {
-    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest",
-        25, false, "You open the chest, there is a cloak sitting inside the chest", new Item("cloak", 1, "this is a magical blue cloak that allows whoever posseses it to walk through walls that have a blue detail on them", "there is a cloak on the floor"), null) };
+    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false,
+        "You open the chest, there is a cloak sitting inside the chest",
+        new Item("cloak", 1,
+            "this is a magical blue cloak that allows whoever posseses it to walk through walls that have a blue detail on them",
+            "there is a cloak on the floor"),
+        null) };
     masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
 
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
-    Item fieldItems[] = { new Item("sign", 25, message, "") };
+    Item fieldItems[] = { new Item("sign", 25, message, ""), new Item("lantern", 1, true, false)};
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
-    Item insideBuildingItmes[] = {};
+    Item dustyAtticItems[] = { new Item("lanternn", 1, true, false) };
+    masterRoomMap.get("DUSTY_ATTIC").addItems(dustyAtticItems);
 
-    Item northDeadEndItems [] = { new Item("engraving", 25, "4 9 2 0", " ")};
+    Item northDeadEndItems[] = { new Item("engraving", 25, "4 9 2 0", " ") };
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
+
+    masterRoomMap.get("INSIDE_BUILDING").changeIsLit(false);
   }
 
   /**
@@ -131,10 +138,17 @@ public class Game {
 
     boolean finished = false;
     while (!finished) {
+      checkIfLit();
       Command command = parser.getCommand();
       finished = processCommand(command);
     }
     System.out.println("Thank you for playing.  Good bye.");
+  }
+
+  private boolean checkIfLit() {
+    if(!currentRoom.getIsLit() && inventory.findItem("lantern") >= 0 && inventory.getItem(inventory.findItem("lantern")).getIsOn())
+      currentRoom.changeIsLit(true);
+    return currentRoom.getIsLit();
   }
 
   /**
@@ -169,9 +183,6 @@ public class Game {
     }
 
     String commandWord = command.getCommandWord();
-    // if (commandWord.equals("test") && command.getSecondWord().equals("test2") &&
-    // command.getThirdWord().equals("test3"))
-    // System.out.println("This worked??? Yay!");
     if (commandWord.equals("help"))
       printHelp();
     else if (commandWord.equals("go"))
@@ -181,11 +192,15 @@ public class Game {
         System.out.println("Quit what?");
       else
         return true; // signal that we want to quit
-    } else if (commandWord.equals("eat")) {
+    } else if (commandWord.equals("eat")) 
       System.out.println("Do you really think you should be eating at a time like this?");
-    } else if (commandWord.equals("yell")) {
-      printYell(command);
-    } else if (commandWord.equals("look"))
+     else if (commandWord.equals("yell")) 
+        printYell(command);
+      else if (commandWord.equals("turn"))
+        turnItem(command);
+     else if(!currentRoom.getIsLit()) 
+      System.out.println("You cannot do that while this room is dark");
+    else if (commandWord.equals("look"))
       System.out.println(currentRoom.longDescription());
     else if (commandWord.equals("take"))
       takeItem(command);
@@ -200,12 +215,60 @@ public class Game {
     return false;
   }
 
+  private void turnItem(Command command) {
+    String secondWord = command.getSecondWord();
+    String thirdWord = command.getThirdWord();
+    if (secondWord == "on" || command.hasSecondWord() || secondWord == "off") {
+      if (!command.hasThirdWord())
+        System.out.println("What do you want to turn " + secondWord);
+      else {
+        int index = inventory.findItem(thirdWord);
+        if (index < 0)
+          System.out.println("There is no item with that name in your inventory");
+        else {
+          Item item = inventory.getItem(index);
+          if (!item.getCanTurnOn())
+            System.out.println("That item cannot be turned " + secondWord);
+          else {
+            boolean turnOn;
+            if (secondWord.equals("on"))
+              turnOn = true;
+            else
+              turnOn = false;
+            if (item.getIsOn() && turnOn)
+              System.out.println("This item is already on");
+            else if (!item.getIsOn() && !turnOn)
+              System.out.println("This item is already off");
+            else {
+              item.changeIsOn(turnOn);
+              System.out.println(item.getName() + " turned " + secondWord);
+              if(item.getName().equals("lantern")){
+              if(currentRoom.getIsLit() && !turnOn){
+                currentRoom.changeIsLit(false);
+                System.out.println("This room is now dark");
+              }else if(!currentRoom.getIsLit() && turnOn){
+                currentRoom.changeIsLit(true);
+                System.out.println("This room is now lit\n" + currentRoom.shortDescription());
+              }
+              }
+            }
+          }
+        }
+      }
+    } else {
+      System.out.println("what are you talking about?");
+    }
+  }
+
   private void readItem(Command command) {
     Item item;
-    int roomIndex = currentRoom.inRoom(command.getSecondWord());
-    int inventoryIndex = inventory.findItem(command.getSecondWord());
+    String secondWord = command.getSecondWord();
+    if (secondWord == null)
+      System.out.println("What do you want to read?");
+    int roomIndex = currentRoom.inRoom(secondWord);
+    int inventoryIndex = inventory.findItem(secondWord);
     if (roomIndex < 0 && inventoryIndex < 0)
-      System.out.println("There is no item that you can see");
+      System.out.println("There is no item with that name that you can see");
     else {
       if (inventoryIndex > 0)
         item = inventory.getItem(inventoryIndex);
@@ -238,7 +301,8 @@ public class Game {
     }
   }
 
-  // viewInventory: Allows the user to view all items in their inventory or a specific item in their inventory
+  // viewInventory: Allows the user to view all items in their inventory or a
+  // specific item in their inventory
   private void viewInventory(Command command) {
     if (!command.hasSecondWord())
       System.out.println("What do you want to view?");
@@ -362,6 +426,9 @@ public class Game {
       System.out.println("You can't walk through walls, if only there was an item that let you do that ...");
     else {
       currentRoom = nextRoom;
+      if(!checkIfLit())
+        System.out.println(currentRoom.darkDescription());
+      else
       System.out.println(currentRoom.longDescription());
     }
   }

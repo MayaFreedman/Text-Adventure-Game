@@ -24,9 +24,6 @@ import java.util.Scanner;
  */
 public class Game {
   // Creates Strings used to change the color of the text in the terminal
-  public String reset = "\u001B[0m";
-  public String red = "\u001B[31m";
-  public String blue = "\u001B[34m";
 
   private Parser parser;
   private Room currentRoom;
@@ -104,26 +101,23 @@ public class Game {
     parser = new Parser();
     setItems();
   }
-
+  /*
+  *setItems: initializes and adds all the items of the game
+  */
   public void setItems() {
-    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false,
-        "You open the chest, there is a cloak sitting inside the chest",
-        new Item("cloak", 1,
-            "this is a magical blue cloak that allows whoever posseses it to walk through walls that have a blue detail on them",
-            "there is a cloak on the floor"),
-        null) };
+    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false, "You open the chest, there is a cloak sitting inside the chest",
+        new Item("cloak", 1, "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"), null) };
     masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
 
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
-    Item fieldItems[] = { new Item("sign", 25, message, ""), new Item("lantern", 1, true, false)};
+    Item fieldItems[] = { new Item("sign", 25, message, ""), new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms")};
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
-    Item dustyAtticItems[] = { new Item("lanternn", 1, true, false) };
+    Item dustyAtticItems[] = { new Item("lanternn", 1, true, false, "a rusty lantern that can light up dark rooms") };
     masterRoomMap.get("DUSTY_ATTIC").addItems(dustyAtticItems);
 
-    Item northDeadEndItems[] = { new Item("engraving", 25, "4 9 2 0", " ") };
+    Item northDeadEndItems[] = { new Item("engraving", 25, "4 9 2 0", null) };
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
-
     masterRoomMap.get("INSIDE_BUILDING").changeIsLit(false);
   }
 
@@ -156,7 +150,6 @@ public class Game {
    */
   private void printWelcome() {
     System.out.println();
-    System.out.println(red + "W͎̿h͕̀ỳ͢ ̨̇d͚̍o͎̅ ͕̊ẁ͉e̢̚ ̳̄p͓͐l̺͝ạ̔y̼͐ ͔̋t̞͝h̬͞ȋ̫s̘͐ ̪͊g̻͑a̯͆m̹͂è͖" + reset);
     System.out.println("Welcome to Zork!");
     System.out.println("Zork is a new, incredibly boring adventure game.");
     System.out.println("Type 'help' if you need help.");
@@ -215,6 +208,10 @@ public class Game {
     return false;
   }
 
+  /*
+  * turnItem: lets the user turn on or off an item if that item can turn on or off
+  * and displays the appropriate error message if the user can't perform that action
+  */
   private void turnItem(Command command) {
     String secondWord = command.getSecondWord();
     String thirdWord = command.getThirdWord();
@@ -256,10 +253,14 @@ public class Game {
         }
       }
     } else {
-      System.out.println("what are you talking about?");
+      System.out.println("I don't understand what you're saying");
     }
   }
 
+  /*
+  * Lets the player read any item that can be read, 
+  * displays the appropriate error message if that action is not possible
+  */
   private void readItem(Command command) {
     Item item;
     String secondWord = command.getSecondWord();
@@ -421,7 +422,7 @@ public class Game {
       System.out.println("There is no path leading that direction");
     // Checks for specific cases where the user must possess an item in order to
     // move from one room to another
-    else if (currentRoom.getRoomName().equals("Room 1") && nextRoom.getRoomName().equals("Room 2")
+    else if (currentRoom.getRoomName().equals("South Dead End") && nextRoom.getRoomName().equals("Secret Layer")
         && inventory.findItem("cloak") < 0)
       System.out.println("You can't walk through walls, if only there was an item that let you do that ...");
     else {

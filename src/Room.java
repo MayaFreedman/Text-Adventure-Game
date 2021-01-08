@@ -1,3 +1,4 @@
+
 /*
  * Class Room - a room in an adventure game.
  *
@@ -21,8 +22,8 @@ public class Room {
   private String roomName;
   private String description;
   private HashMap<String, Room> exits; // stores exits of this room.
-  private ArrayList <Item> itemList; // stores all items in this room
-  private ArrayList <Pokemon> pokemonList; // stores all pokemon in this room
+  private ArrayList<Item> itemList; // stores all items in this room
+  private ArrayList<Pokemon> pokemonList; // stores all pokemon in this room
   private boolean isLit;
 
   /**
@@ -39,10 +40,9 @@ public class Room {
     roomName = "DEFAULT ROOM";
     description = "DEFAULT DESCRIPTION";
     exits = new HashMap<String, Room>();
-    itemList = new ArrayList <Item>();
+    itemList = new ArrayList<Item>();
     isLit = true;
   }
-  
 
   public void setExit(char direction, Room r) throws Exception {
     String dir = "";
@@ -92,23 +92,24 @@ public class Room {
   }
 
   /*
-  addItems: adds Items to the room by filling the ArrayList itemsList with items
-  */
-  public void addItems(Item items[]){
-    for(int i = 0; i < items.length; i++){
+   * addItems: adds Items to the room by filling the ArrayList itemsList with
+   * items
+   */
+  public void addItems(Item items[]) {
+    for (int i = 0; i < items.length; i++) {
       itemList.add(items[i]);
     }
   }
 
   /*
-  *addPokemon: adds Pokemon to the room by filling the ArrayList PokemonList with Pokemon
-  */
-  public void addPokemon(Pokemon pokemon[]){
-    for(int i = 0; i < pokemon.length; i++){
+   * addPokemon: adds Pokemon to the room by filling the ArrayList PokemonList
+   * with Pokemon
+   */
+  public void addPokemon(Pokemon pokemon[]) {
+    for (int i = 0; i < pokemon.length; i++) {
       pokemonList.add(pokemon[i]);
     }
   }
-
 
   /**
    * Return the description of the room (the one that was defined in the
@@ -123,18 +124,26 @@ public class Room {
    * Exits: north west
    */
   public String longDescription() {
-    String x = "";
-    for(Item i : itemList){
-      x += " " + i.getName();
+    String itemDescription = "";
+    int i;
+    if (itemList.size() > 0) {
+      itemDescription = "You see a";
+      for (i = 0; i < itemList.size() - 1; i++) {
+        itemDescription += " " + itemList.get(i).getName() + ",";
+      }
+      if (!(itemList.size() == 1))
+        itemDescription += " and";
+      itemDescription += " " + itemList.get(i).getName();
+      itemDescription += " sitting in the room";
     }
-    return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\nItems in room :" + x;
+    return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\n" + itemDescription;
   }
 
   /*
-  * Returns a description of this room in the event it is not lit and the
-  * player cannot see anything
-  */
-  public String darkDescription(){
+   * Returns a description of this room in the event it is not lit and the player
+   * cannot see anything
+   */
+  public String darkDescription() {
     return "Room: " + roomName + "\n\n" + "It is dark in this room, you cannot see anything";
   }
 
@@ -149,47 +158,46 @@ public class Room {
     return returnString;
   }
 
-  /* 
-  inRoom: Returns the index of the item with that name in the ArrayList itemList,
-  if an item with that name isn't in itemList, returns -1
-  */
-  public int inRoom(String name){
-    for(int i = 0; i < itemList.size(); i++){
-      if(itemList.get(i).getName().equals(name))
+  /*
+   * inRoom: Returns the index of the item with that name in the ArrayList
+   * itemList, if an item with that name isn't in itemList, returns -1
+   */
+  public int inRoom(String name) {
+    for (int i = 0; i < itemList.size(); i++) {
+      if (itemList.get(i).getName().equals(name))
         return i;
     }
     return -1;
   }
-  
-  //removeItem: removes a given item from the room
-  public void removeItem(Item item){
-      itemList.remove(item);
+
+  // removeItem: removes a given item from the room
+  public void removeItem(Item item) {
+    itemList.remove(item);
   }
 
-  public ArrayList <Item> getItemList(){
+  public ArrayList<Item> getItemList() {
     return itemList;
   }
 
-
   /*
-  takeItem: removes the item from a specific index in the 
-  ArrayList itemList and returns it
-  */
-  public Item takeItem(int index){
-        Item item = itemList.get(index);
-        itemList.remove(index);
-        return item;
+   * takeItem: removes the item from a specific index in the ArrayList itemList
+   * and returns it
+   */
+  public Item takeItem(int index) {
+    Item item = itemList.get(index);
+    itemList.remove(index);
+    return item;
   }
 
-  //Adds a specific item to the room 
-  public void addItem(Item item){
+  // Adds a specific item to the room
+  public void addItem(Item item) {
     itemList.add(item);
   }
 
   /*
-  Gets the item at given index in the ArrayList itemList
-  */
-  public Item getItem(int index){
+   * Gets the item at given index in the ArrayList itemList
+   */
+  public Item getItem(int index) {
     return itemList.get(index);
   }
 
@@ -206,16 +214,16 @@ public class Room {
   }
 
   /*
-  changes the light status in the room (true -> lit, false -> dark)
-  */
-  public void changeIsLit(boolean isLit){
+   * changes the light status in the room (true -> lit, false -> dark)
+   */
+  public void changeIsLit(boolean isLit) {
     this.isLit = isLit;
   }
 
   /*
-  * Returns if the room is lit or not (true -> it's lit, false -> it's not lit)
-  */
-  public boolean getIsLit(){
+   * Returns if the room is lit or not (true -> it's lit, false -> it's not lit)
+   */
+  public boolean getIsLit() {
     return isLit;
   }
 

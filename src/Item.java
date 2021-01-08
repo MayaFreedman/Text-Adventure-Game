@@ -8,7 +8,6 @@ public class Item {
     private Item innerItem;
     private String description;
     private String readMessage;
-    private String inRoom;
     private boolean isOn;
     private boolean canTurnOn;
     
@@ -24,9 +23,8 @@ public class Item {
     * Constructor: Used for ordinary items that need a name, weight, description and a message for 
     * when it's in a room (Items that can be picked up)
     */
-    public Item(String name, String inRoom, int weight, String description){
+    public Item(String name, int weight, String description){
         this.name = name;
-        this.inRoom = inRoom;
         this.weight = weight;
         this.description = description;
     }
@@ -56,11 +54,12 @@ public class Item {
     /*
     * Constructor: Used for items that can be turned on and off
     */
-    public Item(String name, int weight, boolean canTurnOn, boolean isOn){
+    public Item(String name, int weight, boolean canTurnOn, boolean isOn, String description){
         this.name = name;
         this.weight = weight;
         this.canTurnOn = true;
         this.isOn = isOn;
+        this.description = description;
     }
 
     /*

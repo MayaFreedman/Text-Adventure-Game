@@ -126,14 +126,19 @@ public class Room {
   public String longDescription() {
     String itemDescription = "";
     int i;
-    if (itemList.size() > 0) {
+    ArrayList <Item> pickupableItemList = new ArrayList <Item>();
+    for(Item item : itemList){
+      if(item.getWeight() <= 5) 
+        pickupableItemList.add(item);
+    }
+    if (pickupableItemList.size() > 0) {
       itemDescription = "You see a";
-      for (i = 0; i < itemList.size() - 1; i++) {
-        itemDescription += " " + itemList.get(i).getName() + ",";
+      for (i = 0; i < pickupableItemList.size() - 1; i++) {
+        itemDescription += " " + pickupableItemList.get(i).getName() + ",";
       }
-      if (!(itemList.size() == 1))
+      if (!(pickupableItemList.size() == 1))
         itemDescription += " and";
-      itemDescription += " " + itemList.get(i).getName();
+      itemDescription += " " + pickupableItemList.get(i).getName();
       itemDescription += " sitting in the room";
     }
     return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\n" + itemDescription;

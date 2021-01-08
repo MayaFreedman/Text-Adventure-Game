@@ -101,16 +101,21 @@ public class Game {
     parser = new Parser();
     setItems();
   }
+
   /*
-  *setItems: initializes and adds all the items of the game
-  */
+   * setItems: initializes and adds all the items of the game
+   */
   public void setItems() {
-    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false, "You open the chest, there is a cloak sitting inside the chest",
-        new Item("cloak", 1, "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"), null) };
+    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false,
+        "You open the chest, there is a cloak sitting inside the chest",
+        new Item("cloak", 1,
+            "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"),
+        null) };
     masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
 
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
-    Item fieldItems[] = { new Item("sign", 25, message, ""), new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms")};
+    Item fieldItems[] = { new Item("sign", 25, message, ""),
+        new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms") };
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
     Item dustyAtticItems[] = { new Item("lanternn", 1, true, false, "a rusty lantern that can light up dark rooms") };
@@ -119,6 +124,9 @@ public class Game {
     Item northDeadEndItems[] = { new Item("engraving", 25, "4 9 2 0", null) };
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
     masterRoomMap.get("INSIDE_BUILDING").changeIsLit(false);
+
+    Item CenterOfBridgeItems [] = {new Item ("keypad", "1234", 25, true), new Item ("door", 25, false, "the door to the west is now open", null, null)};
+    masterRoomMap.get("CENTER_OF_BRIDGE").addItems(CenterOfBridgeItems);
   }
 
   /**
@@ -140,7 +148,8 @@ public class Game {
   }
 
   private boolean checkIfLit() {
-    if(!currentRoom.getIsLit() && inventory.findItem("lantern") >= 0 && inventory.getItem(inventory.findItem("lantern")).getIsOn())
+    if (!currentRoom.getIsLit() && inventory.findItem("lantern") >= 0
+        && inventory.getItem(inventory.findItem("lantern")).getIsOn())
       currentRoom.changeIsLit(true);
     return currentRoom.getIsLit();
   }
@@ -185,13 +194,13 @@ public class Game {
         System.out.println("Quit what?");
       else
         return true; // signal that we want to quit
-    } else if (commandWord.equals("eat")) 
+    } else if (commandWord.equals("eat"))
       System.out.println("Do you really think you should be eating at a time like this?");
-     else if (commandWord.equals("yell")) 
-        printYell(command);
-      else if (commandWord.equals("turn"))
-        turnItem(command);
-     else if(!currentRoom.getIsLit()) 
+    else if (commandWord.equals("yell"))
+      printYell(command);
+    else if (commandWord.equals("turn"))
+      turnItem(command);
+    else if (!currentRoom.getIsLit())
       System.out.println("You cannot do that while this room is dark");
     else if (commandWord.equals("look"))
       System.out.println(currentRoom.longDescription());
@@ -205,13 +214,39 @@ public class Game {
       openItem(command);
     else if (commandWord.equals("read"))
       readItem(command);
+    else if (commandWord.equals("input"))
+      inputCode(command);
     return false;
   }
 
+  private void inputCode(Command command) {
+    String thirdWord = command.getThirdWord();
+    String forthWord = command.getFourthWord();
+    int index = currentRoom.inRoom("keypad");
+    Item item = currentRoom.getItem(index);
+    if (!(thirdWord != null && thirdWord.equals("into") && forthWord != null && forthWord.equals("keypad")))
+      System.out.println(
+          "I don't understand what you're saying \nif you're trying to input a code into a keybad, type 'input (put code here) into keypad'");
+    else if (index < 0)
+      System.out.println("There is no keypad in this room");
+    else if (!item.getIsLocked())
+      System.out.println("This keypad is already unlocked");
+    else if (!(item.getCode().equals(command.getSecondWord())))
+      System.out.println("Wrong code");
+    else {
+      System.out.println("Door unlocked");
+      item.changeIsLocked(false);
+      currentRoom.getItem(currentRoom.inRoom("door")).setIsOpened(true);
+      ;
+    }
+
+  }
+
   /*
-  * turnItem: lets the user turn on or off an item if that item can turn on or off
-  * and displays the appropriate error message if the user can't perform that action
-  */
+   * turnItem: lets the user turn on or off an item if that item can turn on or
+   * off and displays the appropriate error message if the user can't perform that
+   * action
+   */
   private void turnItem(Command command) {
     String secondWord = command.getSecondWord();
     String thirdWord = command.getThirdWord();
@@ -239,14 +274,14 @@ public class Game {
             else {
               item.changeIsOn(turnOn);
               System.out.println(item.getName() + " turned " + secondWord);
-              if(item.getName().equals("lantern")){
-              if(currentRoom.getIsLit() && !turnOn){
-                currentRoom.changeIsLit(false);
-                System.out.println("This room is now dark");
-              }else if(!currentRoom.getIsLit() && turnOn){
-                currentRoom.changeIsLit(true);
-                System.out.println("This room is now lit\n" + currentRoom.shortDescription());
-              }
+              if (item.getName().equals("lantern")) {
+                if (currentRoom.getIsLit() && !turnOn) {
+                  currentRoom.changeIsLit(false);
+                  System.out.println("This room is now dark");
+                } else if (!currentRoom.getIsLit() && turnOn) {
+                  currentRoom.changeIsLit(true);
+                  System.out.println("This room is now lit\n" + currentRoom.shortDescription());
+                }
               }
             }
           }
@@ -258,9 +293,9 @@ public class Game {
   }
 
   /*
-  * Lets the player read any item that can be read, 
-  * displays the appropriate error message if that action is not possible
-  */
+   * Lets the player read any item that can be read, displays the appropriate
+   * error message if that action is not possible
+   */
   private void readItem(Command command) {
     Item item;
     String secondWord = command.getSecondWord();
@@ -425,12 +460,14 @@ public class Game {
     else if (currentRoom.getRoomName().equals("South Dead End") && nextRoom.getRoomName().equals("Secret Layer")
         && inventory.findItem("cloak") < 0)
       System.out.println("You can't walk through walls, if only there was an item that let you do that ...");
+    else if (currentRoom.getRoomName().equals("Center of Bridge") && nextRoom.getRoomName().equals("West Hut") && !currentRoom.getItem(currentRoom.inRoom("door")).getIsOpened())
+      System.out.println("That door is locked");
     else {
       currentRoom = nextRoom;
-      if(!checkIfLit())
+      if (!checkIfLit())
         System.out.println(currentRoom.darkDescription());
       else
-      System.out.println(currentRoom.longDescription());
+        System.out.println(currentRoom.longDescription());
     }
   }
 }

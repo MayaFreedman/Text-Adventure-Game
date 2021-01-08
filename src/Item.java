@@ -1,5 +1,3 @@
-import org.w3c.dom.NameList;
-
 public class Item {
     private String name;
     private int weight;
@@ -10,6 +8,8 @@ public class Item {
     private String readMessage;
     private boolean isOn;
     private boolean canTurnOn;
+    private String code;
+    private boolean isLocked;
     
     /*
     * Constructor: Used for ordinary ttems that only need a name and weight (items that cannot be picked up)
@@ -60,6 +60,39 @@ public class Item {
         this.canTurnOn = true;
         this.isOn = isOn;
         this.description = description;
+    }
+
+    /*
+    * Constructor: Used for items that can take in codes
+    */
+    public Item(String name, String code, int weight, boolean isLocked){
+        this.code = code;
+        this.name = name;
+        this.weight = weight;
+        this.isLocked = isLocked;
+    }
+
+    /*
+    * Returns whether or not this item is locked, (returns false if this item
+    * cannot lock)
+    */
+    public boolean getIsLocked(){
+        return isLocked;
+    }
+
+    /*
+    * Changes isLocked to ____
+    */
+    public void changeIsLocked(boolean isLocked){
+        this.isLocked = isLocked;
+    }
+
+    /*
+    * Returns the code of this item, returns null if this item does not 
+    * have a code
+    */
+    public String getCode(){
+        return code;
     }
 
     /*

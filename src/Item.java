@@ -12,7 +12,7 @@ public class Item {
     private boolean isLocked;
     
     /*
-    * Constructor: Used for ordinary ttems that only need a name and weight (items that cannot be picked up)
+    * Constructor: Used for ordinary items that only need a name and weight (items that cannot be picked up)
     */
     public Item(String name, int weight){
         this.name = name;

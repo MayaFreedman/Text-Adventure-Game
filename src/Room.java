@@ -24,7 +24,8 @@ public class Room {
   private HashMap<String, Room> exits; // stores exits of this room.
   private ArrayList<Item> itemList; // stores all items in this room
   private ArrayList<Pokemon> pokemonList; // stores all pokemon in this room
-  private boolean isLit;
+  private boolean hasLight; // represents if this room has a natural light source or not
+  private boolean isLit; // represents the current light status of this room
 
   /**
    * Create a room described "description". Initially, it has no exits.
@@ -42,6 +43,7 @@ public class Room {
     exits = new HashMap<String, Room>();
     itemList = new ArrayList<Item>();
     isLit = true;
+    hasLight = true;
   }
 
   public void setExit(char direction, Room r) throws Exception {
@@ -124,25 +126,34 @@ public class Room {
    * Exits: north west
    */
   public String longDescription() {
-    String itemDescription = "";
-    int i;
-    ArrayList <Item> pickupableItemList = new ArrayList <Item>();
-    for(Item item : itemList){
-      if(item.getWeight() <= 5) 
-        pickupableItemList.add(item);
-    }
-    if (pickupableItemList.size() > 0) {
-      itemDescription = "You see a";
-      for (i = 0; i < pickupableItemList.size() - 1; i++) {
-        itemDescription += " " + pickupableItemList.get(i).getName() + ",";
-      }
-      if (!(pickupableItemList.size() == 1))
-        itemDescription += " and";
-      itemDescription += " " + pickupableItemList.get(i).getName();
-      itemDescription += " sitting in the room";
-    }
-    return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\n" + itemDescription;
+    return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\n" + itemDescription();
   }
+
+  /*
+  * Creates a String of all the pickupable items in the room in the form: 
+  * You see a ____ sitting in the room
+  */
+  public String itemDescription(){
+  String itemDescription = "";
+  int i;
+  ArrayList <Item> pickupableItemList = new ArrayList <Item>();
+  for(Item item : itemList){
+    if(item.getWeight() <= 5) 
+      pickupableItemList.add(item);
+  }
+  if (pickupableItemList.size() > 0) {
+    itemDescription = "You see a";
+    for (i = 0; i < pickupableItemList.size() - 1; i++) {
+      itemDescription += " " + pickupableItemList.get(i).getName() + ",";
+    }
+    if (!(pickupableItemList.size() == 1))
+      itemDescription += " and";
+    itemDescription += " " + pickupableItemList.get(i).getName();
+    itemDescription += " sitting in the room";
+  }
+  return itemDescription;
+}
+
 
   /*
    * Returns a description of this room in the event it is not lit and the player
@@ -226,10 +237,24 @@ public class Room {
   }
 
   /*
-   * Returns if the room is lit or not (true -> it's lit, false -> it's not lit)
+   * Returns if the room is lit or not 
    */
   public boolean getIsLit() {
     return isLit;
+  }
+
+    /*
+   * Returns if the room has a natural light source or not 
+   */
+  public boolean getHasLight(){
+    return hasLight;
+  }
+
+  /*
+  * setHasLight: does a thing
+  */
+  public void setHasLight(boolean hasLight){
+    this.hasLight = hasLight;
   }
 
   public void setRoomName(String roomName) {

@@ -103,9 +103,13 @@ public class Game {
   }
 
   /*
-   * setItems: initializes and adds all the items of the game
+   * setItems: initializes and adds all the items of the game, changes the light
+   * status to dark in dark rooms and declares if any rooms don't have natural
+   * light sources
    */
   public void setItems() {
+    Room room;
+
     Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false,
         "You open the chest, there is a cloak sitting inside the chest",
         new Item("cloak", 1,
@@ -118,15 +122,25 @@ public class Game {
         new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms") };
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
-    Item dustyAtticItems[] = { new Item("lanternn", 1, true, false, "a rusty lantern that can light up dark rooms") };
-    masterRoomMap.get("DUSTY_ATTIC").addItems(dustyAtticItems);
+    Item dustyAtticItems[] = { new Item("lantern", 1, true, true, "a rusty lantern that can light up dark rooms") };
+    room = masterRoomMap.get("DUSTY_ATTIC");
+    room.setHasLight(false);
+    room.addItems(dustyAtticItems);
 
-    Item northDeadEndItems[] = { new Item("engraving", 25, "4 9 2 0", null) };
+    String code = "" + (int) (Math.random() * 10) + (int) (Math.random() * 10) + (int) (Math.random() * 10)
+        + (int) (Math.random() * 10);
+
+    Item northDeadEndItems[] = { new Item("engraving", 25, code, null) };
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
     masterRoomMap.get("INSIDE_BUILDING").changeIsLit(false);
 
-    Item CenterOfBridgeItems [] = {new Item ("keypad", "1234", 25, true), new Item ("door", 25, false, "the door to the west is now open", null, null)};
-    masterRoomMap.get("CENTER_OF_BRIDGE").addItems(CenterOfBridgeItems);
+    Item SouthDeadEndItems[] = { new Item("keypad", code, 25, true),
+        new Item("door", 25, false, "the stone wall shifts to reveal a path to the west", null, null) };
+    masterRoomMap.get("SOUTH_DEAD_END").addItems(SouthDeadEndItems);
+
+    Item darkRoomItems[] = { new Item("switch", 25, true, false, null) };
+    masterRoomMap.get("DARK_ROOM").addItems(darkRoomItems);
+    ;
   }
 
   /**
@@ -254,11 +268,16 @@ public class Game {
       if (!command.hasThirdWord())
         System.out.println("What do you want to turn " + secondWord);
       else {
-        int index = inventory.findItem(thirdWord);
-        if (index < 0)
-          System.out.println("There is no item with that name in your inventory");
+        int inventoryIndex = inventory.findItem(thirdWord);
+        int roomIndex = currentRoom.inRoom(thirdWord);
+        if (roomIndex < 0 && inventoryIndex < 0)
+          System.out.println("There is no item with that name that you can see");
         else {
-          Item item = inventory.getItem(index);
+          Item item;
+          if (inventoryIndex >= 0)
+            item = inventory.getItem(inventoryIndex);
+          else
+            item = currentRoom.getItem(roomIndex);
           if (!item.getCanTurnOn())
             System.out.println("That item cannot be turned " + secondWord);
           else {
@@ -274,7 +293,7 @@ public class Game {
             else {
               item.changeIsOn(turnOn);
               System.out.println(item.getName() + " turned " + secondWord);
-              if (item.getName().equals("lantern")) {
+              if (item.getName().equals("lantern") && !currentRoom.getHasLight()) {
                 if (currentRoom.getIsLit() && !turnOn) {
                   currentRoom.changeIsLit(false);
                   System.out.println("This room is now dark");
@@ -440,6 +459,18 @@ public class Game {
     parser.showCommands();
   }
 
+  /*
+   * Checks for special cases in which something needs to be added to the end of a
+   * room description
+   */
+  public String specialCases() {
+    Room darkRoom = masterRoomMap.get("DARK_ROOM");
+    if (currentRoom.getRoomName().equals("East Hut") && darkRoom.getItem(darkRoom.inRoom("switch")).getIsOn())
+      return "There is now a hole in the wall in the east";
+    else
+      return "";
+  }
+
   /**
    * Try to go to one direction. If there is an exit, enter the new room,
    * otherwise print an error message.
@@ -457,17 +488,29 @@ public class Game {
       System.out.println("There is no path leading that direction");
     // Checks for specific cases where the user must possess an item in order to
     // move from one room to another
-    else if (currentRoom.getRoomName().equals("South Dead End") && nextRoom.getRoomName().equals("Secret Layer")
-        && inventory.findItem("cloak") < 0)
-      System.out.println("You can't walk through walls, if only there was an item that let you do that ...");
-    else if (currentRoom.getRoomName().equals("Center of Bridge") && nextRoom.getRoomName().equals("West Hut") && !currentRoom.getItem(currentRoom.inRoom("door")).getIsOpened())
+    /*
+     * else if (currentRoom.getRoomName().equals("South Dead End") &&
+     * nextRoom.getRoomName().equals("Secret Layer") && inventory.findItem("cloak")
+     * < 0) System.out.
+     * println("You can't walk through walls, if only there was an item that let you do that ..."
+     * );
+     */
+    else if (currentRoom.getRoomName().equals("Center of Bridge") && nextRoom.getRoomName().equals("Hidden Hut")
+        && !currentRoom.getItem(currentRoom.inRoom("door")).getIsOpened())
       System.out.println("That door is locked");
+    else if (currentRoom.getRoomName().equals("East Hut")
+        && nextRoom.getRoomName().equals("North West Corner of Library")
+        && !masterRoomMap.get("DARK_ROOM").getItem(masterRoomMap.get("DARK_ROOM").inRoom("switch")).getIsOn())
+      System.out.println("There is no path leading that direction");
+    else if (currentRoom.getRoomName().equals("South Dead End") && nextRoom.getRoomName().equals("Secret Layer")
+        && !currentRoom.getItem(currentRoom.inRoom("door")).getIsOpened())
+      System.out.println("There is no path leading that direction");
     else {
       currentRoom = nextRoom;
       if (!checkIfLit())
         System.out.println(currentRoom.darkDescription());
       else
-        System.out.println(currentRoom.longDescription());
+        System.out.println(currentRoom.longDescription() + specialCases());
     }
   }
 }

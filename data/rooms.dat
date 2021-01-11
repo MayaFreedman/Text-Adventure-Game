@@ -11,7 +11,7 @@ Room Name: East Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and west.
 Exit Rooms: N-North Tree Top, W-Center of Bridge, E-North West Corner of Library
 Room Name: Center of Bridge
-Room Description: You are standing in the center of a wooden rickety bridge heading east and west. A second bridge connects this bridge heading south.
+Room Description: You are standing in the center of a wooden rickety bridge heading east and west. A second bridge connects this bridge heading south. There is a keypad on the bridge.
 Exit Rooms: W-west Hut, E-east Hut
 Room Name: West Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and east.

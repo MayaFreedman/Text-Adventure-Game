@@ -118,8 +118,7 @@ public class Game {
     masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
 
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
-    Item fieldItems[] = { new Item("sign", 25, message, ""),
-        new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms") };
+    Item fieldItems[] = { new Item("sign", 25, message, ""),new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms") };
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
     Item dustyAtticItems[] = { new Item("lantern", 1, true, true, "a rusty lantern that can light up dark rooms") };
@@ -127,7 +126,29 @@ public class Game {
     room.setHasLight(false);
     room.addItems(dustyAtticItems);
 
-    String code = "" + (int) (Math.random() * 10) + (int) (Math.random() * 10) + (int) (Math.random() * 10)
+    String num1 = "" + (int)(Math.random()*10);
+    String num2 = "" + (int)(Math.random()*10);
+    String num3 = "" + (int)(Math.random()*10);
+    String num4 = "" + (int)(Math.random()*10);
+
+    String code = num1 + num2 + num3 + num4;
+
+    Item northEastItems[] = { new Item("red-book", 1, num1, "a red book with a single number written on the first page")};
+    masterRoomMap.get("NORTH_EAST_CORNER_OF_LIBRARY").addItems(northEastItems);
+
+    Item southWestItems[] = { new Item("yellow-book", 1, num2, "a yellow book with a single number written on the first page")};
+    masterRoomMap.get("SOUTH_WEST_CORNER_OF_LIBRARY").addItems(southWestItems);
+    
+    Item northWestItems[] = { new Item("green-book", 1, num3, "a green book with a single number written on the first page")};
+    masterRoomMap.get("NORTH_WEST_CORNER_OF_LIBRARY").addItems(northWestItems);
+
+    Item southEastItems[] = { new Item("orange-book", 1, num4, "an orange book with a single number written on the first page")};
+    masterRoomMap.get("SOUTH_EAST_CORNER_OF_LIBRARY").addItems(southEastItems);
+
+    Item hiddenHutItems[] = { new Item("keypad", code, 25, true), new Item ("door", 25, false, "east door unlocked", null, null), new Item ("engraving", 25, "red yellow green orange", "")};
+    masterRoomMap.get("HIDDEN_HUT").addItems(hiddenHutItems);
+    
+    code = "" + (int) (Math.random() * 10) + (int) (Math.random() * 10) + (int) (Math.random() * 10)
         + (int) (Math.random() * 10);
 
     Item northDeadEndItems[] = { new Item("engraving", 25, code, null) };
@@ -140,7 +161,6 @@ public class Game {
 
     Item darkRoomItems[] = { new Item("switch", 25, true, false, null) };
     masterRoomMap.get("DARK_ROOM").addItems(darkRoomItems);
-    ;
   }
 
   /**
@@ -325,7 +345,7 @@ public class Game {
     if (roomIndex < 0 && inventoryIndex < 0)
       System.out.println("There is no item with that name that you can see");
     else {
-      if (inventoryIndex > 0)
+      if (inventoryIndex >= 0)
         item = inventory.getItem(inventoryIndex);
       else
         item = currentRoom.getItem(roomIndex);
@@ -495,7 +515,7 @@ public class Game {
      * println("You can't walk through walls, if only there was an item that let you do that ..."
      * );
      */
-    else if (currentRoom.getRoomName().equals("Center of Bridge") && nextRoom.getRoomName().equals("Hidden Hut")
+    else if (currentRoom.getRoomName().equals("Hidden Hut") && nextRoom.getRoomName().equals("South Tree Top")
         && !currentRoom.getItem(currentRoom.inRoom("door")).getIsOpened())
       System.out.println("That door is locked");
     else if (currentRoom.getRoomName().equals("East Hut")

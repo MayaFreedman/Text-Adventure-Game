@@ -12,7 +12,7 @@ Room Description: You are standing in a small wooden hut. There are bridges lead
 Exit Rooms: N-North Tree Top, W-Center of Bridge, E-North West Corner of Library
 Room Name: Center of Bridge
 Room Description: You are standing in the center of a wooden rickety bridge heading east and west. A second bridge connects this bridge heading south. There is a keypad on the bridge.
-Exit Rooms: W-west Hut, E-east Hut
+Exit Rooms: W-West Hut, E-East Hut, S-Hidden Hut
 Room Name: West Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and east.
 Exit Rooms: N-Dark Room, E-Center of Bridge
@@ -47,7 +47,7 @@ Room Name: City Park
 Room Description: You are standing on the south side of a park full of trees. To the north lies a busy street and a parking lot for park visitors is in the west.
 Exit Rooms: N-Busy Street, W-Parking Lot
 Room Name: Hidden Hut
-Room Description: You are in the center of a small wooden hut, with strange engravings around the room.
+Room Description: You are in the center of a small wooden hut, with a strange engraving on the ceiling.
 Exit Rooms: N-Center of Bridge, E-South Tree Top
 Room Name: South Tree Top
 Room Description: You are on top of a large tree. There is a staircase carved into the trunk leading down.

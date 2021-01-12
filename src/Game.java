@@ -109,18 +109,19 @@ public class Game {
    */
   public void setItems() {
     Room room;
-
+    
+    // North Tree Top
     Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false,
         "You open the chest, there is a cloak sitting inside the chest",
-        new Item("cloak", 1,
-            "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"),
-        null) };
+        new Item("chest Item", 1,"add item here later.."),null) };
     masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
 
+    // Field
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
     Item fieldItems[] = { new Item("sign", 25, message, ""),new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms") };
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
+    // Dusty Attic
     Item dustyAtticItems[] = { new Item("lantern", 1, true, true, "a rusty lantern that can light up dark rooms") };
     room = masterRoomMap.get("DUSTY_ATTIC");
     room.setHasLight(false);
@@ -133,34 +134,48 @@ public class Game {
 
     String code = num1 + num2 + num3 + num4;
 
+    //North East Corner of Library
     Item northEastItems[] = { new Item("red-book", 1, num1, "a red book with a single number written on the first page")};
     masterRoomMap.get("NORTH_EAST_CORNER_OF_LIBRARY").addItems(northEastItems);
 
+    // South West Corner of Library
     Item southWestItems[] = { new Item("yellow-book", 1, num2, "a yellow book with a single number written on the first page")};
     masterRoomMap.get("SOUTH_WEST_CORNER_OF_LIBRARY").addItems(southWestItems);
     
+    // North West Corner of Library
     Item northWestItems[] = { new Item("green-book", 1, num3, "a green book with a single number written on the first page")};
     masterRoomMap.get("NORTH_WEST_CORNER_OF_LIBRARY").addItems(northWestItems);
 
+    // South East Corner of Library
     Item southEastItems[] = { new Item("orange-book", 1, num4, "an orange book with a single number written on the first page")};
     masterRoomMap.get("SOUTH_EAST_CORNER_OF_LIBRARY").addItems(southEastItems);
 
+    //Hidden Hut
     Item hiddenHutItems[] = { new Item("keypad", code, 25, true), new Item ("door", 25, false, "east door unlocked", null, null), new Item ("engraving", 25, "red yellow green orange", "")};
     masterRoomMap.get("HIDDEN_HUT").addItems(hiddenHutItems);
     
     code = "" + (int) (Math.random() * 10) + (int) (Math.random() * 10) + (int) (Math.random() * 10)
         + (int) (Math.random() * 10);
 
+    // North Dead End
     Item northDeadEndItems[] = { new Item("engraving", 25, code, null) };
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
     masterRoomMap.get("INSIDE_BUILDING").changeIsLit(false);
 
+    // South Dead End
     Item SouthDeadEndItems[] = { new Item("keypad", code, 25, true),
         new Item("door", 25, false, "the stone wall shifts to reveal a path to the west", null, null) };
     masterRoomMap.get("SOUTH_DEAD_END").addItems(SouthDeadEndItems);
 
+    // Dark Room
     Item darkRoomItems[] = { new Item("switch", 25, true, false, null) };
     masterRoomMap.get("DARK_ROOM").addItems(darkRoomItems);
+
+    // Parking Lot
+    Item parkingLotItems[] = { new Item("trunk", 25, false, "You open the trunk and find a cloak sitting inside the chest",
+    new Item("cloak", 1, "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"),
+    null)};
+    masterRoomMap.get("PARKING_LOT").addItems(parkingLotItems);
   }
 
   /**

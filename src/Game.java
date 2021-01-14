@@ -93,7 +93,7 @@ public class Game {
   public Game() {
     try {
       initRooms("data/rooms.dat");
-      currentRoom = masterRoomMap.get("HIDDEN_HUT");
+      currentRoom = masterRoomMap.get("FIELD");
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -135,7 +135,6 @@ public class Game {
     String num4 = "" + (int)(Math.random()*10);
 
     String code = num1 + num2 + num3 + num4;
-    System.out.println(code);
 
     //North East Corner of Library
     Item northEastItems[] = { new Item("red-book", 1, num1, "a red book with a single number written on the first page")};
@@ -585,7 +584,7 @@ public class Game {
       if (!checkIfLit())
         System.out.println(currentRoom.darkDescription());
       else
-        System.out.println(currentRoom.longDescription() + specialCases());
+        System.out.println(currentRoom.longDescription() + " " + specialCases());
     }
   }
 }

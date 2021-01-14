@@ -11,13 +11,13 @@ Room Name: East Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and west.
 Exit Rooms: N-North Tree Top, W-Center of Bridge, E-North West Corner of Library
 Room Name: Center of Bridge
-Room Description: You are standing in the center of a wooden rickety bridge heading east and west. A second bridge connects this bridge heading south. There is a keypad on the bridge.
+Room Description: You are standing in the center of a wooden rickety bridge heading east and west. A second bridge connects this bridge heading south.
 Exit Rooms: W-West Hut, E-East Hut, S-Hidden Hut
 Room Name: West Hut
-Room Description: You are standing in a small wooden hut. There are bridges leading north and east.
+Room Description: You are standing in a small wooden hut with a chest sitting in the corner. There are bridges leading north and east.
 Exit Rooms: N-Dark Room, E-Center of Bridge
 Room Name: Dark Room
-Room Description: You are standing in a dark room, the only light source coming from a dim fire in the center of the room.
+Room Description: You are standing in a dark room, the only light source coming from a dim fire in the center of the room. There is a switch bolted to the wall.
 Exit Rooms: S-West Hut
 Room Name: Field
 Room Description: You are in a field with a tall grey wall blocking the path to the east.
@@ -38,7 +38,7 @@ Room Name: Outside Building
 Room Description: You are outside of the door to a building blocking the path west. There is a mailbox next to the door. In the north you can spot a parking lot. In the East you see a busy street.
 Exit Rooms: N-Clearing, E-Busy Street, S-Parking lot, W-Inside Building
 Room Name: Parking Lot
-Room Description: You are in an empty parking lot, with only one car in the lot. To the north you see the front of a building, to your east you see a beautiful park.
+Room Description: You are in an empty parking lot, with only one car in the lot that appears to have it's trunk unlocked. To the north you see the front of a building, to your east you see a beautiful park.
 Exit Rooms: N-Outside Building, E-City Park
 Room Name: Busy Street
 Room Description: You are in the middle of a busy street. To the south you see a beautiful park, to the west you see the outside of a white building.
@@ -47,7 +47,7 @@ Room Name: City Park
 Room Description: You are standing on the south side of a park full of trees. To the north lies a busy street and a parking lot for park visitors is in the west.
 Exit Rooms: N-Busy Street, W-Parking Lot
 Room Name: Hidden Hut
-Room Description: You are in the center of a small wooden hut, with a strange engraving on the ceiling.
+Room Description: You are in the center of a small wooden hut, with a strange engraving on the ceiling. There is a door with a keypad beside it on the east wall.
 Exit Rooms: N-Center of Bridge, E-South Tree Top
 Room Name: South Tree Top
 Room Description: You are on top of a large tree. There is a staircase carved into the trunk leading down.
@@ -69,9 +69,9 @@ Room Description: You arrive at a dead end of the cave. There is blue paint spla
 Exit Rooms: W-Secret Layer, E-Center of Cave
 Room Name: Secret Layer
 Room Description: You are standing in an eerie, dim room with dust all over the cave floor. There is a bright light coming from the south.
-Exit Rooms: S-Shrine Room, E-South Dead End
-Room Name: Shrine Room
-Room Description: You are standing in a stone cavern. A candle lit shrine sits in front of you.
+Exit Rooms: S-Stone Cavern, E-South Dead End
+Room Name: Stone Cavern
+Room Description: You are standing in a stone cavern.
 Exit Rooms: N-Secret Layer
 Room Name: North West Corner of Library
 Room Description: You are standing in the north-west corner of a huge library.
@@ -80,7 +80,7 @@ Room Name: South West Corner of Library
 Room Description: You are standing in the south west corner of a huge library.
 Exit Rooms: N-North West Corner of Library, E-South East Corner of Library
 Room Name: South East Corner of Library
-Room Description: You are standing in the south east corner of a huge library.
+Room Description: You are standing in the south east corner of a huge library. There is a wooden staircase leading up.
 Exit Rooms: W-South West Corner of Library, N-North East Corner of Library, U-Dusty Attic
 Room Name: North East Corner of Library
 Room Description: You are standing in the North east corner of a huge library.

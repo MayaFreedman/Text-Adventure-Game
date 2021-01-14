@@ -93,7 +93,7 @@ public class Game {
   public Game() {
     try {
       initRooms("data/rooms.dat");
-      currentRoom = masterRoomMap.get("FIELD");
+      currentRoom = masterRoomMap.get("HIDDEN_HUT");
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -111,14 +111,16 @@ public class Game {
     Room room;
     
     // North Tree Top
-    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25), new Item("chest", 25, false,
-        "You open the chest, there is a cloak sitting inside the chest",
-        new Item("chest Item", 1,"add item here later.."),null) };
+    Item northTreeTopItems[] = { new Item("couch", 25), new Item("table", 25) };
     masterRoomMap.get("NORTH_TREE_TOP").addItems(northTreeTopItems);
+
+    // South Tree Top
+    Pokemon bulbasaur = new Pokemon("bulbasaur", "cut", "cut down trees blocking your path");
+    masterRoomMap.get("SOUTH_TREE_TOP").addPokemon(bulbasaur);
 
     // Field
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
-    Item fieldItems[] = { new Item("sign", 25, message, ""),new Item("lantern", 1, true, false, "a rusty lantern that can light up dark rooms") };
+    Item fieldItems[] = { new Item("sign", 25, message, "")};
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
     // Dusty Attic
@@ -133,6 +135,7 @@ public class Game {
     String num4 = "" + (int)(Math.random()*10);
 
     String code = num1 + num2 + num3 + num4;
+    System.out.println(code);
 
     //North East Corner of Library
     Item northEastItems[] = { new Item("red-book", 1, num1, "a red book with a single number written on the first page")};
@@ -153,6 +156,11 @@ public class Game {
     //Hidden Hut
     Item hiddenHutItems[] = { new Item("keypad", code, 25, true), new Item ("door", 25, false, "east door unlocked", null, null), new Item ("engraving", 25, "red yellow green orange", "")};
     masterRoomMap.get("HIDDEN_HUT").addItems(hiddenHutItems);
+
+    //West Hut
+    Item westHutItems[] = { new Item("chest", 25, false,"You open the chest, there is a pokeball sitting inside the chest",
+    new Item("pokeball", 1,"A red and white pokeball that can be used to catch pokemon"),null)};
+    masterRoomMap.get("WEST_HUT").addItems(westHutItems);
     
     code = "" + (int) (Math.random() * 10) + (int) (Math.random() * 10) + (int) (Math.random() * 10)
         + (int) (Math.random() * 10);
@@ -160,7 +168,13 @@ public class Game {
     // North Dead End
     Item northDeadEndItems[] = { new Item("engraving", 25, code, null) };
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
+    
+    //Inside Building
     masterRoomMap.get("INSIDE_BUILDING").changeIsLit(false);
+
+    //Outside Building
+    Item outsideBuildingItems[] = {new Item("mailbox", 25, false, "you open the mailbox to find a pokeball sitting inside", new Item("pokeball", 1,"A red and white pokeball that can be used to catch pokemon"),null)};
+    masterRoomMap.get("OUTSIDE_BUILDING").addItems(outsideBuildingItems);
 
     // South Dead End
     Item SouthDeadEndItems[] = { new Item("keypad", code, 25, true),
@@ -265,20 +279,40 @@ public class Game {
       readItem(command);
     else if (commandWord.equals("input"))
       inputCode(command);
+    else if (commandWord.equals("catch"))
+      catchPokemon(command);
     return false;
+  }
+
+  private void catchPokemon(Command command) {
+    String secondWord = command.getSecondWord();
+    int PokeballIndex = inventory.findItem("pokeball");
+    int pokemonIndex = currentRoom.inRoom(secondWord);
+    if(pokemonIndex < 0)
+      System.out.println("There is no pokemon with that name that you can see");
+    else if(PokeballIndex < 0)
+      System.out.println("You need a pokeball to catch a pokemon");
+    else{
+      inventory.removeItem(inventory.getItem(PokeballIndex));
+      Pokemon pokemon = currentRoom.getPokemon(pokemonIndex);
+      inventory.addPokemon(pokemon);
+      currentRoom.removePokemon(pokemon);
+      System.out.println(pokemon.getName() + " Caught");
+    }
   }
 
   private void inputCode(Command command) {
     String thirdWord = command.getThirdWord();
     String forthWord = command.getFourthWord();
     int index = currentRoom.inRoom("keypad");
-    Item item = currentRoom.getItem(index);
     if (!(thirdWord != null && thirdWord.equals("into") && forthWord != null && forthWord.equals("keypad")))
       System.out.println(
           "I don't understand what you're saying \nif you're trying to input a code into a keybad, type 'input (put code here) into keypad'");
     else if (index < 0)
       System.out.println("There is no keypad in this room");
-    else if (!item.getIsLocked())
+    else{
+    Item item = currentRoom.getItem(index);
+    if (!item.getIsLocked())
       System.out.println("This keypad is already unlocked");
     else if (!(item.getCode().equals(command.getSecondWord())))
       System.out.println("Wrong code");
@@ -286,7 +320,7 @@ public class Game {
       System.out.println("Door unlocked");
       item.changeIsLocked(false);
       currentRoom.getItem(currentRoom.inRoom("door")).setIsOpened(true);
-      ;
+    }
     }
 
   }
@@ -400,15 +434,21 @@ public class Game {
       System.out.println(inventory.showInventory());
     else {
       Item item;
-      int inventoryIndex = inventory.findItem(command.getSecondWord());
-      if (inventoryIndex < 0)
+      Pokemon pokemon;
+      String secondWord = command.getSecondWord();
+      int itemIndex = inventory.findItem(secondWord);
+      int pokemonIndex = inventory.findPokemon(secondWord);
+      if (itemIndex < 0 && pokemonIndex < 0)
         System.out.println("You do not have that in your inventory");
-      else {
-        item = inventory.getItem(inventoryIndex);
+      else if(itemIndex >= 0){
+        item = inventory.getItem(itemIndex);
         System.out.println(item.getDescription());
+      }else{
+        pokemon = inventory.getPokemon(pokemonIndex);
+        System.out.println(pokemon.getDescription());
+      }
       }
     }
-  }
 
   /*
    * takeItem: Allows the user to remove an item from their inventory and drop it

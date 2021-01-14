@@ -40,6 +40,7 @@ public class Room {
     // default constructor.
     roomName = "DEFAULT ROOM";
     description = "DEFAULT DESCRIPTION";
+    pokemonList = new ArrayList <Pokemon>();
     exits = new HashMap<String, Room>();
     itemList = new ArrayList<Item>();
     isLit = true;
@@ -113,6 +114,28 @@ public class Room {
     }
   }
 
+  /*
+  * addPokemon: adds a single Pokemon to the room
+  */
+  public void addPokemon(Pokemon pokemon){
+    pokemonList.add(pokemon);
+  }
+
+  /*
+  removePokemon: removes a given pokemon from the room
+  */
+  public void removePokemon(Pokemon pokemon){
+    pokemonList.remove(pokemon);
+  }
+
+  /*
+  getPokemon: returns a pokemon based on a given index
+  */
+  public Pokemon getPokemon(int index){
+    return pokemonList.get(index);
+  }
+
+
   /**
    * Return the description of the room (the one that was defined in the
    * constructor).
@@ -126,12 +149,12 @@ public class Room {
    * Exits: north west
    */
   public String longDescription() {
-    return "Room: " + roomName + "\n\n" + description + "\n" + exitString() + "\n" + itemDescription();
+    return "Room: " + roomName + "\n\n" + description + " " + itemDescription()+  " " +  pokemonDescription() + "\n" + exitString();
   }
 
   /*
   * Creates a String of all the pickupable items in the room in the form: 
-  * You see a ____ sitting in the room
+  * You see a ____ sitting on the ground
   */
   public String itemDescription(){
   String itemDescription = "";
@@ -149,9 +172,28 @@ public class Room {
     if (!(pickupableItemList.size() == 1))
       itemDescription += " and";
     itemDescription += " " + pickupableItemList.get(i).getName();
-    itemDescription += " sitting in the room";
+    itemDescription += " sitting on the ground.";
   }
   return itemDescription;
+}
+
+  /*
+  * Creates a String of all the pokemon in the room in the form: 
+  * There is a ____ sitting in front of you  */
+public String pokemonDescription(){
+  String pokemonDescription = "";
+  int i;
+  if (pokemonList.size() > 0) {
+    pokemonDescription = "There is a";
+    for (i = 0; i < pokemonList.size() - 1; i++) {
+      pokemonDescription += " " + pokemonList.get(i).getName() + ",";
+    }
+    if (!(pokemonList.size() == 1))
+    pokemonDescription += " and";
+    pokemonDescription += " " + pokemonList.get(i).getName();
+    pokemonDescription += " sitting in front of you.";
+  }
+  return pokemonDescription;
 }
 
 
@@ -176,11 +218,16 @@ public class Room {
 
   /*
    * inRoom: Returns the index of the item with that name in the ArrayList
-   * itemList, if an item with that name isn't in itemList, returns -1
+   * itemList pr the ArrayList pokemonList, if an item / pokemon with that name isn't 
+   * in the room, returns -1
    */
   public int inRoom(String name) {
     for (int i = 0; i < itemList.size(); i++) {
       if (itemList.get(i).getName().equals(name))
+        return i;
+    }
+    for (int i = 0; i < pokemonList.size(); i++){
+      if(pokemonList.get(i).getName().equals(name))
         return i;
     }
     return -1;
@@ -267,5 +314,9 @@ public class Room {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public ArrayList <Pokemon> getPokemon(){
+    return pokemonList;
   }
 }

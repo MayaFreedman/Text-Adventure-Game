@@ -10,7 +10,7 @@
  */
 class CommandWords {
   // a constant array that holds all valid command words
-  private static final String validCommands[] = { "go", "quit", "help", "eat", "yell", "look", "take", "drop", "view", "open", "read", "turn", "input", "catch"};
+  private static final String validCommands[] = { "go", "quit", "help", "eat", "yell", "look", "take", "drop", "view", "open", "read", "turn", "input", "catch", "bulbasaur", "squirtle", "charmander"};
 
   /**
    * Constructor - initialise the command words.
@@ -36,7 +36,7 @@ class CommandWords {
    * Print all valid commands to System.out.
    */
   public void showAll() {
-    for (int i = 0; i < validCommands.length; i++) {
+    for (int i = 0; i < validCommands.length-3; i++) {
       System.out.print(validCommands[i] + "  ");
     }
     System.out.println();

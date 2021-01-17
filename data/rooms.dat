@@ -1,8 +1,8 @@
 Room Name: Clearing
-Room Description:  You are in a large field with a sign in front of you. There is a path heading east into a forest.
+Room Description:  You are in a large field. There is a path heading east into a forest.
 Exit Rooms: E-Forest, S-Outside Building
 Room Name: Forest
-Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A lader hangs from the base of one of the trees.
+Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A ladder hangs from the base of one of the trees.
 Exit Rooms: W-Clearing, U-North Tree Top, E-Field
 Room Name: North Tree Top
 Room Description:  You standing on a small wooden platform on top of a tree. There is a couch and table sitting on the platform. There is a bridge leading south.
@@ -20,38 +20,23 @@ Room Name: Dark Room
 Room Description: You are standing in a dark room, the only light source coming from a dim fire in the center of the room. There is a switch bolted to the wall.
 Exit Rooms: S-West Hut
 Room Name: Field
-Room Description: You are in a field with a tall grey wall blocking the path to the east.
+Room Description: You are in a field with a tall grey wall blocking the path to the east. There is a sign sitting in front of you.
 Exit Rooms: W-Forest, E-Beach
 Room Name: Beach
-Room Description: You are standing on a sandy beach with a lake to the south.
-Exit Rooms: S-Shallow Water, W-Field
-Room Name: Shallow Water
-Room Description: You are in the shallow part of a lake. To the south, you see that the lake gets deeper and you will not be able to stand.
-Exit Rooms: S-Deep Water, N-Beach
-Room Name: Deep Water
-Room Description: You are underwater at the deepest point in the lake. There is a rock to your right with a small opening
-Exit Rooms: N-Shallow Water, E-Underwater Cove
-Room Name: Underwater Cove
-Room Decription: You are in an underwater cove filled with random objects floating around.
-Exit Rooms: W-Deep Water
+Room Description: You are standing on a sandy beach. In the south, you spot a lake containing a large island in the center.
+Exit Rooms: W-Field
 Room Name: Outside Building
-Room Description: You are outside of the door to a building blocking the path west. There is a mailbox next to the door. In the north you can spot a parking lot. In the East you see a busy street.
-Exit Rooms: N-Clearing, E-Busy Street, S-Parking lot, W-Inside Building
+Room Description: You are outside of a blue building with no door. There is a mailbox next to the door. In the north you can spot a parking lot. In the East you see a busy street.
+Exit Rooms: N-Clearing, S-Parking lot, W-Inside Building
 Room Name: Parking Lot
 Room Description: You are in an empty parking lot, with only one car in the lot that appears to have it's trunk unlocked. To the north you see the front of a building, to your east you see a beautiful park.
-Exit Rooms: N-Outside Building, E-City Park
-Room Name: Busy Street
-Room Description: You are in the middle of a busy street. To the south you see a beautiful park, to the west you see the outside of a white building.
-Exit Rooms: S-City Park, W-Outside Building
-Room Name: City Park
-Room Description: You are standing on the south side of a park full of trees. To the north lies a busy street and a parking lot for park visitors is in the west.
-Exit Rooms: N-Busy Street, W-Parking Lot
+Exit Rooms: N-Outside Building
 Room Name: Hidden Hut
 Room Description: You are in the center of a small wooden hut, with a strange engraving on the ceiling. There is a door with a keypad beside it on the east wall.
 Exit Rooms: N-Center of Bridge, E-South Tree Top
 Room Name: South Tree Top
-Room Description: You are on top of a large tree. There is a staircase carved into the trunk leading down.
-Exit Rooms: D-City Park, W-Hidden Hut
+Room Description: You are on a wooden platform on top of a large tree.
+Exit Rooms: W-Hidden Hut
 Room Name: Inside Building
 Room Description: You are inside of a white one story building.
 Exit Rooms: E-Outside Building, D-Cave Entrance
@@ -59,13 +44,13 @@ Room Name: Cave Entrance
 Room Description: You are standing in the entrance to a large cave. There are paths leading west and south
 Exit Rooms: S-Center of Cave, U-Inside Building, W-North Dead End
 Room Name: North Dead End
-Room Description: You are standing at a dead end of the cave.
+Room Description: You are standing at a dead end of the cave. There is a strange engraving on the wall.
 Exit Rooms: E-Cave Entrance
 Room Name: Center of Cave
 Room Description: You are standing in the center of a cave. There are tunnels heading north and west.
 Exit Rooms: W-South Dead End, N-Cave Entrance
 Room Name: South Dead End
-Room Description: You arrive at a dead end of the cave. There is blue paint splattered on the west wall.
+Room Description: You arrive at a dead end of the cave. There is a keypad on the west wall.
 Exit Rooms: W-Secret Layer, E-Center of Cave
 Room Name: Secret Layer
 Room Description: You are standing in an eerie, dim room with dust all over the cave floor. There is a bright light coming from the south.
@@ -88,3 +73,18 @@ Exit Rooms: W-North West Corner of Library, S-South East Corner of Library
 Room Name: Dusty Attic
 Room Description: You emerge in a tiny attic filled with dust.
 Exit Rooms: D-South East Corner of Library
+Room Name: North Side of Island
+Room Description: You are on the north side of a huge island.
+Exit Rooms: S-Center of Island
+Room Name: Center of Island
+Room Description: You are standing in the center of a huge island.
+Exit Rooms: N-North Side of Island, W-West Side of Island, E-East Side of Island, S-South East of Island
+Room Name: South Side of Island
+Room Description: You are on a sandy beach on the south side of a huge island.
+Exit Rooms: N-Center of Island
+Room Name: East Side of Island
+Room Description: You are in a patch of grass on the east side of a huge island. There is a keypad on the ground.
+Exit Rooms: W-Center of Island
+Room Name: West Side of Island
+Room Description: You are on the west side of a huge island.
+Exit Rooms: E-Center of Island

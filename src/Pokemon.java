@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-
 public class Pokemon {
     private String name;
-    private ArrayList<String> moves;
     private String move;
     private String moveDescription;
 
@@ -21,7 +18,7 @@ public class Pokemon {
     }
 
     public String getDescription(){
-        return name + " description: A pokemon named" + name + "\nmove:" + move + ".\n" + move + " allows you to " + moveDescription;
+        return name + " description: A pokemon named " + name + "\nmove: " + move + "\n" + move + " allows you to " + moveDescription;
     }
 
     /*

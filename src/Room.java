@@ -217,15 +217,22 @@ public String pokemonDescription(){
   }
 
   /*
-   * inRoom: Returns the index of the item with that name in the ArrayList
-   * itemList pr the ArrayList pokemonList, if an item / pokemon with that name isn't 
-   * in the room, returns -1
+   * itemInRoom: Returns the index of the item with that name in the ArrayList
+   * itemList, if an item with that name isn't in the room, returns -1
    */
-  public int inRoom(String name) {
+  public int itemInRoom(String name) {
     for (int i = 0; i < itemList.size(); i++) {
       if (itemList.get(i).getName().equals(name))
         return i;
     }
+    return -1;
+  }
+
+  /*
+   * pokemonInRoom: Returns the index of a pokemon with that name in the ArrayList
+   * pokemonList if it's in the room, if it's not in the room, returns -1
+   */
+  public int pokemonInRoom(String name) {
     for (int i = 0; i < pokemonList.size(); i++){
       if(pokemonList.get(i).getName().equals(name))
         return i;

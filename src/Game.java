@@ -116,12 +116,12 @@ public class Game {
 
     // South Tree Top
     Pokemon bulbasaur = new Pokemon("bulbasaur", "cut", "cut down trees blocking your path");
-    masterRoomMap.get("FIELD").addPokemon(bulbasaur);
+    masterRoomMap.get("SOUTH_TREE_TOP").addPokemon(bulbasaur);
 
     // Field
     String message = "Welcome to Diamond city! \n This sign is going to explain how the game is played";
     Item fieldItems[] = { new Item("sign", 25, message, ""),
-        new Item("vine", 6, false, "You cut the vine and reveal an open path to a beach in the east", null, null) , new Item ("pokeball", 0, "a red and white pokeball ooga")};
+        new Item("vine", 6, false, "You cut the vine and reveal an open path to a beach in the east", null, null)};
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
     // Dusty Attic
@@ -178,7 +178,7 @@ public class Game {
     masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
 
     // Stone Canvern
-    masterRoomMap.get("FIELD").addPokemon(new Pokemon("squirtle", "surf", "allows you to breathe surf over water and onto the nearest land"));
+    masterRoomMap.get("STONE_CAVERN").addPokemon(new Pokemon("squirtle", "surf", "allows you to breathe surf over water and onto the nearest land"));
 
     // Inside Building
     masterRoomMap.get("INSIDE_BUILDING").setHasLight(false);
@@ -206,6 +206,34 @@ public class Game {
             "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"),
         null) };
     masterRoomMap.get("PARKING_LOT").addItems(parkingLotItems);
+
+    // North Side of Island
+    Item northSideOfIslandItems[] = {new Item ("tree", 6, true, new Item ("coconut", 6, false, "you open the coconut and find the letters h, m and d painted on the inside", null, "a coconut with the letters h, m and d painted on the inside"), "you shake the tree, resulting in a coconut faling from one of the branches.")};
+    masterRoomMap.get("NORTH_SIDE_OF_ISLAND").addItems(northSideOfIslandItems);
+
+    //South Side of Island
+    Item southSideOfIslandItems[] = {new Item ("tree", 6, true, new Item ("coconut", 6, false, "you open the coconut and find the letters c, r, n and r painted on the inside", null, "a coconut with the letters h, m and d painted on the inside"), "you shake the tree, resulting in a coconut faling from one of the branches.")};
+    masterRoomMap.get("SOUTH_SIDE_OF_ISLAND").addItems(southSideOfIslandItems);
+
+    //Center of Island
+    Item centerOfIslandItems[] = {new Item ("tree", 6, true, new Item ("coconut", 6, false, "you open the coconut and find a pokeball sitting inside", new Item ("pokeball", 1, "a red and white pokeball that can catch pokemon"), "a coconut with the letters h, m and d painted on the inside"), "you shake the tree, resulting in a coconut faling from one of the branches.")};
+    masterRoomMap.get("CENTER_OF_ISLAND").addItems(centerOfIslandItems);
+
+    //West Side of Island
+    Item westSideOfIslandItems[] = {new Item ("tree", 6, true, new Item ("coconut", 6, false, "you open the coconut and find the letters a, a and e painted on the inside", null, "a coconut with the letters h, m and d painted on the inside"), "you shake the tree, resulting in a coconut faling from one of the branches.")};
+    masterRoomMap.get("WEST_SIDE_OF_ISLAND").addItems(westSideOfIslandItems);
+
+    //East Side of Island
+    Item eastSideOfIslandItems[] = { new Item("keypad", "charmander", 6, true),
+    new Item("door", 25, false, "the ground shifts to reveal a stone staircase in the ground leading down", null, null), new Item("sign", 6, "To unlock the keypad, remember: one letter from south, one letter from north, one letter from west, repeat") };
+    masterRoomMap.get("EAST_SIDE_OF_ISLAND").addItems(eastSideOfIslandItems);
+
+    //Underground Bunker
+    masterRoomMap.get("UNDERGROUND_BUNKER").addPokemon(new Pokemon("charmander", "inferno", "allows you to burn down baracades of rocks"));
+  
+    //Base of Volcano
+    Item baseOfVolcanoItems[] = {new Item ("rocks", 6, false, "charmander burns down the rocks, leaving a path leading up to the peak of the volcano", null, null)};
+    masterRoomMap.get("BASE_OF_VOLCANO").addItems(baseOfVolcanoItems);
   }
 
   /**
@@ -299,11 +327,31 @@ public class Game {
       readItem(command);
     else if (commandWord.equals("input"))
       inputCode(command);
+    else if (commandWord.equals("shake"))
+      shakeTree(command);
     else if (commandWord.equals("catch"))
       catchPokemon(command);
     else if (commandWord.equals("bulbasaur") || commandWord.equals("squirtle") || commandWord.equals("charmander"))
       useMove(command);
     return false;
+  }
+  
+  private void shakeTree(Command command) {
+    if(!command.hasSecondWord())
+      System.out.println("What do you want to shake");
+    int index = currentRoom.itemInRoom(command.getSecondWord());
+    if(index < 0)
+      System.out.println("There is no item with that name that you can see");
+    else{
+      Item item = currentRoom.getItem(index);
+      if(!item.getisShakable())
+        System.out.println("You shake the " + command.getSecondWord() + ". It does nothing");
+      else{
+        System.out.println(item.getShakeMessage());
+        currentRoom.addItem(item.getInnerItem());
+        item.setIsShakable(false);
+      }
+    }
   }
 
   private void useMove(Command command) {
@@ -335,9 +383,15 @@ public class Game {
           System.out.println("Bulbasaur uses cut, it does nothing.");
       }
       if(move.equals("surf")){
-        if (currentRoom.getRoomName().equals("Beach")) {
+        Room northSideofIsland = masterRoomMap.get("NORTH_SIDE_OF_ISLAND");
+        Room beach = masterRoomMap.get("BEACH");
+        if (currentRoom == beach) {
           System.out.println("Squirtle uses surf to surf across the lake onto the large island");
-          currentRoom = masterRoomMap.get("NORTH_SIDE_OF_ISLAND");
+          currentRoom = northSideofIsland;
+          System.out.println(currentRoom.longDescription());
+        }else if (currentRoom == northSideofIsland){
+          System.out.println("Squirtle uses surf to surf across the lake back onto the beach");
+          currentRoom = beach;
           System.out.println(currentRoom.longDescription());
         }
         else
@@ -487,7 +541,7 @@ public class Game {
         System.out.println("There is no item with that name in this room");
       else {
         Item item = currentRoom.getItem(index);
-        if (item.getInnerItem() == null)
+        if (item.getOpenMessage() == null)
           System.out.println("You cannot open this item");
         else if (item.getIsOpened())
           System.out.println("This item is already opened");
@@ -626,6 +680,8 @@ public class Game {
       else
         return "\nThere is a path east to a beach";
     }
+    else if(currentRoom.getRoomName().equals("East Side of Island") && currentRoom.getItem(currentRoom.itemInRoom("door")).getIsOpened())
+      return ("There is a hole in the ground with a staircase leading down");
     else
       return "";
   }
@@ -645,13 +701,6 @@ public class Game {
     Room nextRoom = currentRoom.nextRoom(direction);
     // Checks for specific cases where the user must possess an item in order to
     // move from one room to another
-    /*
-     * else if (currentRoom.getRoomName().equals("South Dead End") &&
-     * nextRoom.getRoomName().equals("Secret Layer") && inventory.findItem("cloak")
-     * < 0) System.out.
-     * println("You can't walk through walls, if only there was an item that let you do that ..."
-     * );
-     */
     if (nextRoom == null)
       System.out.println("There is no path leading that direction");
     else {
@@ -674,6 +723,8 @@ public class Game {
         System.out.println("There is no path leading that direction");
       else if (currentRoomName.equals("Field") && nextRoomName.equals("Beach")&& !currentRoom.getItem(currentRoom.itemInRoom("vine")).getIsOpened())
         System.out.println("There is a vine blocking that direction");
+      else if (currentRoomName.equals("East Side of Island") && nextRoomName.equals("Underground Bunker") && !currentRoom.getItem(currentRoom.itemInRoom("door")).getIsOpened())
+        System.out.println("There is no path leading that direction");
       else {
         currentRoom = nextRoom;
         checkIfLit();

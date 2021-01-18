@@ -1,15 +1,19 @@
 public class Item {
     private String name;
     private int weight;
+
     private boolean isOpened;
-    private String openMessage;
+    private String message;
     private Item innerItem;
     private String description;
     private String readMessage;
+    private String openMessage;
+    private String shakeMessage;
     private boolean isOn;
     private boolean canTurnOn;
     private String code;
     private boolean isLocked;
+    private boolean isShakable; 
     
     /*
     * Constructor: Used for ordinary items that only need a name and weight (items that cannot be picked up)
@@ -72,12 +76,28 @@ public class Item {
         this.isLocked = isLocked;
     }
 
+    public Item(String name, int weight, boolean isShakable, Item innerItem, String shakeMessage){
+        this.name = name;
+        this.weight = weight;
+        this.isShakable = isShakable;
+        this.innerItem = innerItem;
+        this.shakeMessage = shakeMessage;
+    }
+
     /*
     * Returns whether or not this item is locked, (returns false if this item
     * cannot lock)
     */
     public boolean getIsLocked(){
         return isLocked;
+    }
+
+    public boolean getisShakable(){
+        return isShakable;
+    }
+
+    public void setIsShakable(boolean isShakable){
+        this.isShakable = isShakable;
     }
 
     /*
@@ -141,6 +161,10 @@ public class Item {
 
     public boolean getIsOpened(){
         return isOpened;
+    }
+
+    public String getShakeMessage(){
+        return shakeMessage;
     }
 
     public String getOpenMessage(){

@@ -1,9 +1,12 @@
-Room Name: Clearing
-Room Description:  You are in a large field. There is a path heading east into a forest.
+Room Name: Base of Volcano
+Room Description:  You are at the base of a large volcano, with ashes scattered all ove the floor. There is a path heading east into a forest.
 Exit Rooms: E-Forest, S-Outside Building
+Room Name: Top of Volcano
+Room Description: You are standing at the peak of a large volcano, looking down at the city below you.
+Exit Rooms: D-Base of Volcano
 Room Name: Forest
 Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A ladder hangs from the base of one of the trees.
-Exit Rooms: W-Clearing, U-North Tree Top, E-Field
+Exit Rooms: W-Base of Volcano, U-North Tree Top, E-Field
 Room Name: North Tree Top
 Room Description:  You standing on a small wooden platform on top of a tree. There is a couch and table sitting on the platform. There is a bridge leading south.
 Exit Rooms: D-Forest, S-east Hut
@@ -27,7 +30,7 @@ Room Description: You are standing on a sandy beach. In the south, you spot a la
 Exit Rooms: W-Field
 Room Name: Outside Building
 Room Description: You are outside of a blue building with no door. There is a mailbox next to the door. In the north you can spot a parking lot. In the East you see a busy street.
-Exit Rooms: N-Clearing, S-Parking lot, W-Inside Building
+Exit Rooms: N-Base of Volcano, S-Parking lot, W-Inside Building
 Room Name: Parking Lot
 Room Description: You are in an empty parking lot, with only one car in the lot that appears to have it's trunk unlocked. To the north you see the front of a building, to your east you see a beautiful park.
 Exit Rooms: N-Outside Building
@@ -74,17 +77,20 @@ Room Name: Dusty Attic
 Room Description: You emerge in a tiny attic filled with dust.
 Exit Rooms: D-South East Corner of Library
 Room Name: North Side of Island
-Room Description: You are on the north side of a huge island.
+Room Description: You are on the north side of a huge island. There is a tree filled with coconuts in front of you.
 Exit Rooms: S-Center of Island
 Room Name: Center of Island
 Room Description: You are standing in the center of a huge island.
 Exit Rooms: N-North Side of Island, W-West Side of Island, E-East Side of Island, S-South East of Island
 Room Name: South Side of Island
-Room Description: You are on a sandy beach on the south side of a huge island.
+Room Description: You are on a sandy beach on the south side of a huge island. There is a tree filled with coconuts in front of you.
 Exit Rooms: N-Center of Island
 Room Name: East Side of Island
 Room Description: You are in a patch of grass on the east side of a huge island. There is a keypad on the ground.
-Exit Rooms: W-Center of Island
+Exit Rooms: W-Center of Island, D-Underground Bunker
 Room Name: West Side of Island
-Room Description: You are on the west side of a huge island.
+Room Description: You are in a forest on the west side of a huge island. One specific tree seems to be filled with coconuts in front of you.
 Exit Rooms: E-Center of Island
+Room Name: Underground Bunker
+Room Description: You are in a dim underground bunker made out of stone.
+Exit Rooms: U-East Side of Island

@@ -22,8 +22,8 @@ public class Pokemon {
     }
 
     /*
-    comparePokemon: Returns a boolean describing if the two items are the same
-    their name
+    comparePokemon: Returns a boolean describing if the two pokemon have the same
+    name
     */
     public boolean comparePokemon(Pokemon pokemon2){
         return this.name.equals(pokemon2.name);

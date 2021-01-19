@@ -55,7 +55,7 @@ public class Inventory {
 
     // removePokemon: Removes a specified item from the players inventory
     public void removePokemon(Pokemon pokemon) {
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < pokemonList.size(); i++) {
             if (pokemon.comparePokemon(pokemonList.get(i)))
                 pokemonList.remove(i);
         }

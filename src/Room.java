@@ -13,10 +13,8 @@
  * north, east, south, west.  For each direction, the room stores a reference
  * to the neighbouring room, or null if there is no exit in that direction.
  */
-import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Room {
   private String roomName;
@@ -135,21 +133,12 @@ public class Room {
     return pokemonList.get(index);
   }
 
-
-  /**
-   * Return the description of the room (the one that was defined in the
-   * constructor).
-   */
-  public String shortDescription() {
-    return "Room: " + roomName + "\n\n" + description;
-  }
-
   /**
    * Return a long description of this room, on the form: You are in the kitchen.
    * Exits: north west
    */
   public String longDescription() {
-    return "Room: " + roomName + "\n\n" + description + " " + itemDescription()+  " " +  pokemonDescription() + "\n" + exitString();
+    return "Room: " + roomName + "\n\n" + description + " " + itemDescription()+  " " +  pokemonDescription();
   }
 
   /*
@@ -203,17 +192,6 @@ public String pokemonDescription(){
    */
   public String darkDescription() {
     return "Room: " + roomName + "\n\n" + "It is dark in this room, you cannot see anything";
-  }
-
-  /**
-   * Return a string describing the room's exits, for example "Exits: north west
-   */
-  private String exitString() {
-    String returnString = "Exits:";
-    Set keys = exits.keySet();
-    for (Iterator iter = keys.iterator(); iter.hasNext();)
-      returnString += " " + iter.next();
-    return returnString;
   }
 
   /*

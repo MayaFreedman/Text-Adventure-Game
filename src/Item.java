@@ -3,7 +3,6 @@ public class Item {
     private int weight;
 
     private boolean isOpened;
-    private String message;
     private Item innerItem;
     private String description;
     private String readMessage;
@@ -36,13 +35,14 @@ public class Item {
     /*
     * Constructor: Used for items that open and close
     */    
-    public Item(String name, int weight, boolean isOpened, String openMessage, Item innerItem, String description){
+    public Item(String name, int weight, boolean isOpened, String openMessage, Item innerItem, String description, boolean isLocked){
         this.name = name;
         this.weight = weight;
         this.isOpened = isOpened;
         this.openMessage = openMessage;
         this.innerItem = innerItem;
         this.description = description;
+        this.isLocked = isLocked;
     }
 
     /*
@@ -148,7 +148,7 @@ public class Item {
     * Returns a description of this item
     */
     public String getDescription(){
-        return name + " description: " + description;
+        return name + " description: " + description + "\nWeight: " + weight;
     }
 
     public String getName(){

@@ -1,18 +1,3 @@
-
-/*
- * Class Room - a room in an adventure game.
- *
- * Author:  Michael Kolling
- * Version: 1.1
- * Date:    August 2000
- * 
- * This class is part of Zork. Zork is a simple, text based adventure game.
- *
- * "Room" represents one location in the scenery of the game.  It is 
- * connected to at most four other rooms via exits.  The exits are labelled
- * north, east, south, west.  For each direction, the room stores a reference
- * to the neighbouring room, or null if there is no exit in that direction.
- */
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,26 +10,23 @@ public class Room {
   private boolean hasLight; // represents if this room has a natural light source or not
   private boolean isLit; // represents the current light status of this room
 
-  /**
-   * Create a room described "description". Initially, it has no exits.
-   * "description" is something like "a kitchen" or "an open court yard".
+  /*
+   * Constructor: sets up a room with the defalt settings, including being lit and
+   * having light
    */
-  public Room(String description) {
-    this.description = description;
-    exits = new HashMap<String, Room>();
-  }
-
   public Room() {
-    // default constructor.
     roomName = "DEFAULT ROOM";
     description = "DEFAULT DESCRIPTION";
-    pokemonList = new ArrayList <Pokemon>();
+    pokemonList = new ArrayList<Pokemon>();
     exits = new HashMap<String, Room>();
     itemList = new ArrayList<Item>();
     isLit = true;
     hasLight = true;
   }
 
+  /*
+   * setExit: sets the exits of the room
+   */
   public void setExit(char direction, Room r) throws Exception {
     String dir = "";
     switch (direction) {
@@ -73,25 +55,6 @@ public class Room {
     exits.put(dir, r);
   }
 
-  /**
-   * Define the exits of this room. Every direction either leads to another room
-   * or is null (no exit there).
-   */
-  public void setExits(Room north, Room east, Room south, Room west, Room up, Room down) {
-    if (north != null)
-      exits.put("north", north);
-    if (east != null)
-      exits.put("east", east);
-    if (south != null)
-      exits.put("south", south);
-    if (west != null)
-      exits.put("west", west);
-    if (up != null)
-      exits.put("up", up);
-    if (up != null)
-      exits.put("down", down);
-  }
-
   /*
    * addItems: adds Items to the room by filling the ArrayList itemsList with
    * items
@@ -113,82 +76,82 @@ public class Room {
   }
 
   /*
-  * addPokemon: adds a single Pokemon to the room
-  */
-  public void addPokemon(Pokemon pokemon){
+   * addPokemon: adds a single Pokemon to the room
+   */
+  public void addPokemon(Pokemon pokemon) {
     pokemonList.add(pokemon);
   }
 
   /*
-  removePokemon: removes a given pokemon from the room
-  */
-  public void removePokemon(Pokemon pokemon){
+   * removePokemon: removes a given pokemon from the room
+   */
+  public void removePokemon(Pokemon pokemon) {
     pokemonList.remove(pokemon);
   }
 
   /*
-  getPokemon: returns a pokemon based on a given index
-  */
-  public Pokemon getPokemon(int index){
+   * getPokemon: returns a pokemon based on a given index
+   */
+  public Pokemon getPokemon(int index) {
     return pokemonList.get(index);
   }
 
-  /**
-   * Return a long description of this room, on the form: You are in the kitchen.
-   * Exits: north west
+  /*
+   * description: Return a long description of this room, on the form: You are in
+   * the kitchen. Exits: north west
    */
-  public String longDescription() {
-    return "Room: " + roomName + "\n\n" + description + " " + itemDescription()+  " " +  pokemonDescription();
+  public String description() {
+    return "Room: " + roomName + "\n\n" + description + " " + itemDescription() + " " + pokemonDescription();
   }
 
   /*
-  * Creates a String of all the pickupable items in the room in the form: 
-  * You see a ____ sitting on the ground
-  */
-  public String itemDescription(){
-  String itemDescription = "";
-  int i;
-  ArrayList <Item> pickupableItemList = new ArrayList <Item>();
-  for(Item item : itemList){
-    if(item.getWeight() <= 5) 
-      pickupableItemList.add(item);
-  }
-  if (pickupableItemList.size() > 0) {
-    itemDescription = "You see a";
-    for (i = 0; i < pickupableItemList.size() - 1; i++) {
-      itemDescription += " " + pickupableItemList.get(i).getName() + ",";
+   * itemDescription: Creates a String of all the pickupable items in the room in
+   * the form: You see a ____ sitting on the ground
+   */
+  public String itemDescription() {
+    String itemDescription = "";
+    int i;
+    ArrayList<Item> pickupableItemList = new ArrayList<Item>();
+    for (Item item : itemList) {
+      if (item.getWeight() <= 5)
+        pickupableItemList.add(item);
     }
-    if (!(pickupableItemList.size() == 1))
-      itemDescription += " and";
-    itemDescription += " " + pickupableItemList.get(i).getName();
-    itemDescription += " sitting on the ground.";
-  }
-  return itemDescription;
-}
-
-  /*
-  * Creates a String of all the pokemon in the room in the form: 
-  * There is a ____ sitting in front of you  */
-public String pokemonDescription(){
-  String pokemonDescription = "";
-  int i;
-  if (pokemonList.size() > 0) {
-    pokemonDescription = "There is a";
-    for (i = 0; i < pokemonList.size() - 1; i++) {
-      pokemonDescription += " " + pokemonList.get(i).getName() + ",";
+    if (pickupableItemList.size() > 0) {
+      itemDescription = "You see a";
+      for (i = 0; i < pickupableItemList.size() - 1; i++) {
+        itemDescription += " " + pickupableItemList.get(i).getName() + ",";
+      }
+      if (!(pickupableItemList.size() == 1))
+        itemDescription += " and";
+      itemDescription += " " + pickupableItemList.get(i).getName();
+      itemDescription += " sitting on the ground.";
     }
-    if (!(pokemonList.size() == 1))
-    pokemonDescription += " and";
-    pokemonDescription += " " + pokemonList.get(i).getName();
-    pokemonDescription += " sitting in front of you.";
+    return itemDescription;
   }
-  return pokemonDescription;
-}
-
 
   /*
-   * Returns a description of this room in the event it is not lit and the player
-   * cannot see anything
+   * pokemonDescription: Creates a String of all the pokemon in the room in the
+   * form: There is a ____ sitting in front of you
+   */
+  public String pokemonDescription() {
+    String pokemonDescription = "";
+    int i;
+    if (pokemonList.size() > 0) {
+      pokemonDescription = "There is a";
+      for (i = 0; i < pokemonList.size() - 1; i++) {
+        pokemonDescription += " " + pokemonList.get(i).getName() + ",";
+      }
+      if (!(pokemonList.size() == 1))
+        pokemonDescription += " and";
+      pokemonDescription += " " + pokemonList.get(i).getName();
+      pokemonDescription += " sitting in front of you.";
+    }
+    return pokemonDescription;
+  }
+
+  /*
+   * darkDescription: Returns a description of this room in the event it is not
+   * lit and the player cannot see anything
    */
   public String darkDescription() {
     return "Room: " + roomName + "\n\n" + "It is dark in this room, you cannot see anything";
@@ -211,14 +174,16 @@ public String pokemonDescription(){
    * pokemonList if it's in the room, if it's not in the room, returns -1
    */
   public int pokemonInRoom(String name) {
-    for (int i = 0; i < pokemonList.size(); i++){
-      if(pokemonList.get(i).getName().equals(name))
+    for (int i = 0; i < pokemonList.size(); i++) {
+      if (pokemonList.get(i).getName().equals(name))
         return i;
     }
     return -1;
   }
 
-  // removeItem: removes a given item from the room
+  /*
+   * removeItem: removes a given item from the room
+   */
   public void removeItem(Item item) {
     itemList.remove(item);
   }
@@ -237,21 +202,23 @@ public String pokemonDescription(){
     return item;
   }
 
-  // Adds a specific item to the room
+  /*
+   * addItem: Adds a specific item to the room
+   */
   public void addItem(Item item) {
     itemList.add(item);
   }
 
   /*
-   * Gets the item at given index in the ArrayList itemList
+   * getItem: Gets the item at given index in the ArrayList itemList
    */
   public Item getItem(int index) {
     return itemList.get(index);
   }
 
   /**
-   * Return the room that is reached if we go from this room in direction
-   * "direction". If there is no room in that direction, return null.
+   * nextRoom: Return the room that is reached if we go from this room in
+   * direction "direction". If there is no room in that direction, return null.
    */
   public Room nextRoom(String direction) {
     return (Room) exits.get(direction);
@@ -262,46 +229,59 @@ public String pokemonDescription(){
   }
 
   /*
-   * changes the light status in the room (true -> lit, false -> dark)
+   * changeIsLit: changes the light status in the room (true meaning lit, false
+   * meaning dark)
    */
   public void changeIsLit(boolean isLit) {
     this.isLit = isLit;
   }
 
   /*
-   * Returns if the room is lit or not 
+   * getIsLit: Returns if the room is lit or not
    */
   public boolean getIsLit() {
     return isLit;
   }
 
-    /*
-   * Returns if the room has a natural light source or not 
+  /*
+   * getHasLight: Returns if the room has a natural light source or not
    */
-  public boolean getHasLight(){
+  public boolean getHasLight() {
     return hasLight;
   }
 
   /*
-  * setHasLight: does a thing
-  */
-  public void setHasLight(boolean hasLight){
+   * setHasLight: does a thing
+   */
+  public void setHasLight(boolean hasLight) {
     this.hasLight = hasLight;
   }
 
+  /*
+   * setRoomName: sets the name of this room
+   */
   public void setRoomName(String roomName) {
     this.roomName = roomName;
   }
 
+  /*
+   * getDescription: returns the description of this room
+   */
   public String getDescription() {
     return description;
   }
 
+  /*
+   * setDescription: sets the description of this room
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
-  public ArrayList <Pokemon> getPokemon(){
+  /*
+   * getPokemon: returns an arrayList full of the pokemon in this room
+   */
+  public ArrayList<Pokemon> getPokemon() {
     return pokemonList;
   }
 }

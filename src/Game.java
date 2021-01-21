@@ -4,39 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-//import javax.lang.model.util.ElementScanner6;
-
-/**
- * Class Game - the main class of the "Zork" game.
- *
- * Author: Michael Kolling Version: 1.1 Date: March 2000
- * 
- * This class is the main class of the "Zork" application. Zork is a very
- * simple, text based adventure game. Users can walk around some scenery. That's
- * all. It should really be extended to make it more interesting!
- * 
- * To play this game, create an instance of this class and call the "play"
- * routine.
- * 
- * This main class creates and initialises all the others: it creates all rooms,
- * creates the parser and starts the game. It also evaluates the commands that
- * the parser returns.
- */
 public class Game {
-  // Creates Strings used to change the color of the text in the terminal
 
   private Parser parser;
   private Room currentRoom;
   private Inventory inventory;
-  // This is a MASTER object that contains all of the rooms and is easily
-  // accessible.
-  // The key will be the name of the room -> no spaces (Use all caps and
-  // underscore -> Great Room would have a key of GREAT_ROOM
-  // In a hashmap keys are case sensitive.
-  // masterRoomMap.get("GREAT_ROOM") will return the Room Object that is the Great
-  // Room (assuming you have one).
+  // Contains all the rooms of the game
   private HashMap<String, Room> masterRoomMap;
 
+  /*
+   * initRooms: initiates all the rooms for the game and stores them in a hash map
+   */
   private void initRooms(String fileName) throws Exception {
     masterRoomMap = new HashMap<String, Room>();
     Scanner roomScanner;
@@ -62,10 +40,10 @@ public class Game {
 
         exits.put(roomName.substring(10).trim().toUpperCase().replaceAll(" ", "_"), temp);
 
-        // This puts the room we created (Without the exits in the masterMap)
+        // Puts the room without the exits in the masterMap
         masterRoomMap.put(roomName.toUpperCase().substring(10).trim().replaceAll(" ", "_"), room);
 
-        // Now we better set the exits.
+        // Set the exits.
       }
 
       for (String key : masterRoomMap.keySet()) {
@@ -95,7 +73,6 @@ public class Game {
       initRooms("data/rooms.dat");
       currentRoom = masterRoomMap.get("FIELD");
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     parser = new Parser();
@@ -120,8 +97,8 @@ public class Game {
 
     // Field
     String message = "Welcome to Diamond city!\nSome helpful hints for the game:\nEach pokemon has a move they specialize in. Once you catch a pokemon using a pokeball, type 'view pokemon' to see their move\nTo use that move, type '(Pokemon name) use (move name)'\nThe combined weight of the items in your inventory must be 5 or less\nTo view the specific weight and information about an item, type 'view (itemname)'\nAt any point if you need help, type 'help' to see a list of usable commands or 'look' to look around the room\nGood luck on your quest brave hero!";
-    Item fieldItems[] = { new Item("sign", 6, message, ""),
-        new Item("vine", 6, false, "You cut the vine and reveal an open path to a beach in the east", null, null, true)};
+    Item fieldItems[] = { new Item("sign", 6, message, ""), new Item("vine", 6, false,
+        "You cut the vine and reveal an open path to a beach in the east", null, null, true) };
     masterRoomMap.get("FIELD").addItems(fieldItems);
 
     // Dusty Attic
@@ -129,6 +106,7 @@ public class Game {
     room = masterRoomMap.get("DUSTY_ATTIC");
     room.addItems(dustyAtticItems);
 
+    // Creates a random code for South Tree Top
     String num1 = "" + (int) (Math.random() * 10);
     String num2 = "" + (int) (Math.random() * 10);
     String num3 = "" + (int) (Math.random() * 10);
@@ -170,16 +148,21 @@ public class Game {
             new Item("pokeball", 1, "A red and white pokeball that can be used to catch pokemon"), null, false) };
     masterRoomMap.get("WEST_HUT").addItems(westHutItems);
 
+    // Creates a random code for Nort Dead End
     code = "" + (int) (Math.random() * 10) + (int) (Math.random() * 10) + (int) (Math.random() * 10)
         + (int) (Math.random() * 10);
 
     // North Dead End
     Item northDeadEndItems[] = { new Item("engraving", 6, code, null) };
-    masterRoomMap.get("NORTH_DEAD_END").addItems(northDeadEndItems);
+    room = masterRoomMap.get("NORTH_DEAD_END");
+    room.addItems(northDeadEndItems);
+    room.setHasLight(false);
 
     // Stone Canvern
-    masterRoomMap.get("STONE_CAVERN")
-        .addPokemon(new Pokemon("squirtle", "surf", "allows you to breathe surf over water and onto the nearest land"));
+    room = masterRoomMap.get("STONE_CAVERN");
+    room.addPokemon(new Pokemon("squirtle", "surf", "allows you to breathe surf over water and onto the nearest land"));
+    room.addItem(new Item("candle", 6));
+    room.setHasLight(false);
 
     // Inside Building
     masterRoomMap.get("INSIDE_BUILDING").setHasLight(false);
@@ -195,7 +178,18 @@ public class Game {
     // South Dead End
     Item SouthDeadEndItems[] = { new Item("keypad", code, 6, true),
         new Item("door", 6, false, "the stone wall shifts to reveal a path to the west", null, null, true) };
-    masterRoomMap.get("SOUTH_DEAD_END").addItems(SouthDeadEndItems);
+    room = masterRoomMap.get("SOUTH_DEAD_END");
+    room.addItems(SouthDeadEndItems);
+    room.setHasLight(false);
+
+    // Secret Layer
+    masterRoomMap.get("SECRET_LAYER").setHasLight(false);
+
+    // Cave Entrance
+    masterRoomMap.get("CAVE_ENTRANCE").setHasLight(false);
+
+    // Center of Cave
+    masterRoomMap.get("CENTER_OF_CAVE").setHasLight(false);
 
     // Dark Room
     Item darkRoomItems[] = { new Item("switch", 6, true, false, null) };
@@ -205,7 +199,7 @@ public class Game {
     Item parkingLotItems[] = { new Item("trunk", 6, false, "You open the trunk and find a cloak sitting inside.",
         new Item("cloak", 1,
             "this is a magical blue cloak. Whoever posseses it can walk through walls that have a blue detail on them"),
-        null, false)};
+        null, false) };
     masterRoomMap.get("PARKING_LOT").addItems(parkingLotItems);
 
     // Beach
@@ -222,24 +216,23 @@ public class Game {
     masterRoomMap.get("NORTH_SIDE_OF_ISLAND").addItems(northSideOfIslandItems);
 
     // South Side of Island
-    Item southSideOfIslandItems[] = { new Item("tree", 6, true,
-        new Item("coconut", 6, false, "you open the coconut and find the letters c, r, n and r painted on the inside",
-            null, null, false),
+    Item southSideOfIslandItems[] = { new Item(
+        "tree", 6, true, new Item("coconut", 6, false,
+            "you open the coconut and find the letters c, r, n and r painted on the inside", null, null, false),
         "you shake the tree, resulting in a coconut faling from one of the branches.") };
     masterRoomMap.get("SOUTH_SIDE_OF_ISLAND").addItems(southSideOfIslandItems);
 
     // Center of Island
     Item centerOfIslandItems[] = { new Item("tree", 6, true,
         new Item("coconut", 6, false, "you open the coconut and find a pokeball sitting inside",
-            new Item("pokeball", 1, "a red and white pokeball that can be used to catch pokemon"),
-            null, false),
+            new Item("pokeball", 1, "a red and white pokeball that can be used to catch pokemon"), null, false),
         "you shake the tree, resulting in a coconut faling from one of the branches.") };
     masterRoomMap.get("CENTER_OF_ISLAND").addItems(centerOfIslandItems);
 
     // West Side of Island
-    Item westSideOfIslandItems[] = { new Item("tree", 6, true,
-        new Item("coconut", 6, false, "you open the coconut and find the letters a, a and e painted on the inside",
-            null, null, false),
+    Item westSideOfIslandItems[] = { new Item(
+        "tree", 6, true, new Item("coconut", 6, false,
+            "you open the coconut and find the letters a, a and e painted on the inside", null, null, false),
         "you shake the tree, resulting in a coconut faling from one of the branches.") };
     masterRoomMap.get("WEST_SIDE_OF_ISLAND").addItems(westSideOfIslandItems);
 
@@ -248,12 +241,14 @@ public class Game {
         new Item("door", 6, false, "the ground shifts to reveal a stone staircase in the ground leading down", null,
             null, true),
         new Item("sign", 6,
-            "To unlock the keypad, remember: one letter from south, one letter from north, one letter from west, repeat", "") };
+            "To unlock the keypad, remember: one letter from south, one letter from north, one letter from west, repeat",
+            "") };
     masterRoomMap.get("EAST_SIDE_OF_ISLAND").addItems(eastSideOfIslandItems);
 
     // Underground Bunker
-    masterRoomMap.get("UNDERGROUND_BUNKER")
-        .addPokemon(new Pokemon("charmander", "inferno", "allows you to burn down baracades of rocks"));
+    room = masterRoomMap.get("UNDERGROUND_BUNKER");
+    room.addPokemon(new Pokemon("charmander", "inferno", "allows you to burn down baracades of rocks"));
+    room.setHasLight(false);
 
     // Base of Volcano
     Item baseOfVolcanoItems[] = { new Item("rocks", 6, false,
@@ -261,15 +256,15 @@ public class Game {
     masterRoomMap.get("BASE_OF_VOLCANO").addItems(baseOfVolcanoItems);
   }
 
-  /**
-   * Main play routine. Loops until end of play.
+  /*
+   * play: Main play routine. Loops until end of play.
    */
   public void play() {
-    inventory = new Inventory(5);
+    inventory = new Inventory();
     printWelcome();
     checkIfLit();
-    // Enter the main command loop. Here we repeatedly read commands and
-    // execute them until the game is over.
+    // Enters the main command loop and repeatedly read commands and
+    // executes them until the game is over.
 
     boolean finished = false;
     while (!finished) {
@@ -287,7 +282,7 @@ public class Game {
     if (currentRoom.getRoomName().equals("Top of Volcano") && currentRoom.pokemonInRoom("bulbasaur") >= 0
         && currentRoom.pokemonInRoom("squirtle") >= 0 && currentRoom.pokemonInRoom("charmander") >= 0) {
       System.out.println(
-          "All three pokemon are on the volcano flash into balls of light that spread over the city, returning diamond city to it's former glory");
+          "All three pokemon on the volcano flash into balls of light that spread over the city, returning diamond city to it's former glory");
       System.out.println(
           "Congratulations!\nYou have rescued the three starter pokemon from the clutches of evil, restoring peace and order in the city\nThe whole town commends you brave hero\n\n");
       return true;
@@ -295,6 +290,9 @@ public class Game {
       return false;
   }
 
+  /*
+   * checkIfLit: checks if the current room is lit
+   */
   private void checkIfLit() {
     if (!currentRoom.getHasLight()) {
       int index = inventory.findItem("lantern");
@@ -314,12 +312,12 @@ public class Game {
     System.out.println(
         "\nThe three starter pokemon have been stolen and hid around the city, resulting in terror among the citizens.\nWe need you to find all three starter pokemon, Bulbasaur, Squirtle and Charmander, and release them at the top of the volcano\nwhere they can then restore peace to diamond city");
     System.out.println("\nGood luck brave hero.\nType 'help' if you need help at any point\n");
-    System.out.println(currentRoom.longDescription() + specialCases());
+    System.out.println(currentRoom.description() + specialCases());
   }
 
   /**
-   * Given a command, process (that is: execute) the command. If this command ends
-   * the game, true is returned, otherwise false is returned.
+   * processComand: Given a command, process (that is: execute) the command. If
+   * this command ends the game, true is returned, otherwise false is returned.
    */
   private boolean processCommand(Command command) {
     if (command.isUnknown()) {
@@ -354,7 +352,7 @@ public class Game {
     else if (!currentRoom.getIsLit())
       System.out.println("You cannot do that while this room is dark");
     else if (commandWord.equals("look"))
-      System.out.println(currentRoom.longDescription());
+      System.out.println(currentRoom.description());
     else if (commandWord.equals("take"))
       takeItem(command);
     else if (commandWord.equals("drop"))
@@ -378,6 +376,10 @@ public class Game {
     return false;
   }
 
+  /*
+   * shakeTree: Allows the user to shake an item within the room that will either
+   * drop another item or do nothing
+   */
   private void shakeTree(Command command) {
     if (!command.hasSecondWord())
       System.out.println("What do you want to shake");
@@ -386,7 +388,7 @@ public class Game {
       System.out.println("There is no item with that name that you can see");
     else {
       Item item = currentRoom.getItem(index);
-      if (!item.getisShakable())
+      if (!item.getIsShakable())
         System.out.println("You shake the " + command.getSecondWord() + ". It does nothing");
       else {
         System.out.println(item.getShakeMessage());
@@ -396,13 +398,20 @@ public class Game {
     }
   }
 
+  /*
+   * useMove: Allows the user to use a pokemon's move in the form through imputing
+   * '(pokemon name) use (move name)'. Moves may only be used if the user has a
+   * given pokemon that knows that specific move.
+   */
   private void useMove(Command command) {
     String firstWord = command.getCommandWord();
     if (!command.hasThirdWord() || !command.hasSecondWord())
       System.out.println(
           "I don't understand what you mean.\nIf you're trying to use a pokemon's move, use the form '(pokemon name) use (move name)'");
     else {
-      int index = inventory.findPokemon(firstWord);
+      int index = inventory.findPokemon(
+
+          firstWord);
       if (index < 0)
         System.out.println("There is no pokemon with that name");
       else {
@@ -411,48 +420,72 @@ public class Game {
         if (!move.equals(pokemon.getMove()))
           System.out.println("This pokemon does not know that move");
         else if (move.equals("cut")) {
-          if (currentRoom.getRoomName().equals("Outside Building")
-              && !currentRoom.getItem(currentRoom.itemInRoom("tree")).getIsOpened()) {
-            Item tree = currentRoom.getItem(currentRoom.itemInRoom("tree"));
-            tree.setIsOpened(true);
-            System.out.println(tree.getOpenMessage());
-          } else if (currentRoom.getRoomName().equals("Field")
-              && !currentRoom.getItem(currentRoom.itemInRoom("vine")).getIsOpened()) {
-            Item vine = currentRoom.getItem(currentRoom.itemInRoom("vine"));
-            vine.setIsOpened(true);
-            System.out.println(vine.getOpenMessage());
-          } else
-            System.out.println("Bulbasaur uses cut, it does nothing.");
+          useCut();
         } else if (move.equals("surf")) {
-          Room northSideofIsland = masterRoomMap.get("NORTH_SIDE_OF_ISLAND");
-          Room beach = masterRoomMap.get("BEACH");
-          if (currentRoom == beach) {
-            System.out.println("Squirtle uses surf to surf across the lake onto the large island");
-            currentRoom = northSideofIsland;
-            System.out.println(currentRoom.longDescription());
-          } else if (currentRoom == northSideofIsland) {
-            System.out.println("Squirtle uses surf to surf across the lake back onto the beach");
-            currentRoom = beach;
-            System.out.println(currentRoom.longDescription());
-          } else
-            System.out.println("You cannot use surf when there is no water");
+          useSurf();
         } else if (move.equals("inferno")) {
-          if (currentRoom.getRoomName().equals("Base of Volcano")
-              && !currentRoom.getItem(currentRoom.itemInRoom("rocks")).getIsOpened()) {
-            Item rocks = currentRoom.getItem(currentRoom.itemInRoom("rocks"));
-            rocks.setIsOpened(true);
-            System.out.println(rocks.getOpenMessage());
-          } else
-            System.out.println("charmander uses inferno, it does nothing");
+          useInferno();
         }
       }
     }
   }
 
   /*
+   * useInferno: Simulates a pokemon using the move inferno by burning down rocks
+   * if in the room 'Base of Volcano'
+   */
+  public void useInferno() {
+    if (currentRoom.getRoomName().equals("Base of Volcano")
+        && !currentRoom.getItem(currentRoom.itemInRoom("rocks")).getIsOpened()) {
+      Item rocks = currentRoom.getItem(currentRoom.itemInRoom("rocks"));
+      rocks.setIsOpened(true);
+      System.out.println(rocks.getOpenMessage());
+    } else
+      System.out.println("charmander uses inferno, it does nothing");
+  }
+
+  /*
+   * useCut: Simulates a pokemon using the move cut by cutting down a tree or vine
+   * in a specified room
+   */
+  public void useCut() {
+    if (currentRoom.getRoomName().equals("Outside Building")
+        && !currentRoom.getItem(currentRoom.itemInRoom("tree")).getIsOpened()) {
+      Item tree = currentRoom.getItem(currentRoom.itemInRoom("tree"));
+      tree.setIsOpened(true);
+      System.out.println(tree.getOpenMessage());
+    } else if (currentRoom.getRoomName().equals("Field")
+        && !currentRoom.getItem(currentRoom.itemInRoom("vine")).getIsOpened()) {
+      Item vine = currentRoom.getItem(currentRoom.itemInRoom("vine"));
+      vine.setIsOpened(true);
+      System.out.println(vine.getOpenMessage());
+    } else
+      System.out.println("Bulbasaur uses cut, it does nothing.");
+  }
+
+  /*
+   * useSurf: Simulates a pokemon using the move surf by having them surf across
+   * the water from the room 'Beach' to the room 'North Side of Island'
+   */
+  public void useSurf() {
+    Room northSideofIsland = masterRoomMap.get("NORTH_SIDE_OF_ISLAND");
+    Room beach = masterRoomMap.get("BEACH");
+    if (currentRoom == beach) {
+      System.out.println("Squirtle uses surf to surf across the lake onto the large island");
+      currentRoom = northSideofIsland;
+      System.out.println(currentRoom.description());
+    } else if (currentRoom == northSideofIsland) {
+      System.out.println("Squirtle uses surf to surf across the lake back onto the beach");
+      currentRoom = beach;
+      System.out.println(currentRoom.description());
+    } else
+      System.out.println("You cannot use surf when there is no water");
+
+  }
+
+  /*
    * catchPokemon: lets the user catch a pokemon if they have a pokeball and the
-   * specified pokemon is in the room. Prints out the apropriate error message if
-   * those criteria aren't met
+   * specified pokemon is in the room.
    */
   private void catchPokemon(Command command) {
     String secondWord = command.getSecondWord();
@@ -501,60 +534,60 @@ public class Game {
   }
 
   /*
-   * turnItem: lets the user turn on or off an item if that item can turn on or
-   * off and displays the appropriate error message if the user can't perform that
-   * action
+   * turnItem: lets the user turn on or off an item if the specified item can turn
+   * on or off. If the item is a lantern, it displays a message specifying the
+   * light status of the room
    */
   private void turnItem(Command command) {
     String secondWord = command.getSecondWord();
     String thirdWord = command.getThirdWord();
     if (command.hasSecondWord() && command.hasThirdWord()) {
-        int inventoryIndex = inventory.findItem(thirdWord);
-        int roomIndex = currentRoom.itemInRoom(thirdWord);
-        if (roomIndex < 0 && inventoryIndex < 0)
-          System.out.println("There is no item with that name that you can see");
+      int inventoryIndex = inventory.findItem(thirdWord);
+      int roomIndex = currentRoom.itemInRoom(thirdWord);
+      if (roomIndex < 0 && inventoryIndex < 0)
+        System.out.println("There is no item with that name that you can see");
+      else {
+        Item item;
+        if (inventoryIndex >= 0)
+          item = inventory.getItem(inventoryIndex);
+        else
+          item = currentRoom.getItem(roomIndex);
+        if (!item.getCanTurnOn())
+          System.out.println("That item cannot be turned " + secondWord);
         else {
-          Item item;
-          if (inventoryIndex >= 0)
-            item = inventory.getItem(inventoryIndex);
+          boolean turnOn;
+          if (secondWord.equals("on"))
+            turnOn = true;
           else
-            item = currentRoom.getItem(roomIndex);
-          if (!item.getCanTurnOn())
-            System.out.println("That item cannot be turned " + secondWord);
+            turnOn = false;
+          if (item.getIsOn() && turnOn)
+            System.out.println("This item is already on");
+          else if (!item.getIsOn() && !turnOn)
+            System.out.println("This item is already off");
           else {
-            boolean turnOn;
-            if (secondWord.equals("on"))
-              turnOn = true;
-            else
-              turnOn = false;
-            if (item.getIsOn() && turnOn)
-              System.out.println("This item is already on");
-            else if (!item.getIsOn() && !turnOn)
-              System.out.println("This item is already off");
-            else {
-              item.changeIsOn(turnOn);
-              System.out.println(item.getName() + " turned " + secondWord);
-              if (item.getName().equals("lantern") && !currentRoom.getHasLight()) {
-                if (currentRoom.getIsLit() && !turnOn) {
-                  currentRoom.changeIsLit(false);
-                  System.out.println("This room is now dark");
-                } else if (!currentRoom.getIsLit() && turnOn) {
-                  currentRoom.changeIsLit(true);
-                  System.out.println("This room is now lit\n" + currentRoom.longDescription());
-                }
+            item.changeIsOn(turnOn);
+            System.out.println(item.getName() + " turned " + secondWord);
+            if (item.getName().equals("lantern") && !currentRoom.getHasLight()) {
+              if (currentRoom.getIsLit() && !turnOn) {
+                currentRoom.changeIsLit(false);
+                System.out.println("This room is now dark");
+              } else if (!currentRoom.getIsLit() && turnOn) {
+                currentRoom.changeIsLit(true);
+                System.out.println("This room is now lit\n" + currentRoom.description());
               }
             }
           }
         }
+      }
     } else {
       System.out.println(
-          "I don't understand what you're saying. If you want to turn on an item, use the phrase 'turn item (off/on)");
+          "I don't understand what you're saying. If you want to turn on an item, use the phrase 'turn itemname (off/on)");
     }
   }
 
   /*
-   * Lets the player read any item that can be read, displays the appropriate
-   * error message if that action is not possible
+   * readItem: Lets the player read any item that can be read and displays that
+   * item's message to simulate the user reading it
    */
   private void readItem(Command command) {
     Item item;
@@ -577,6 +610,11 @@ public class Game {
     }
   }
 
+  /*
+   * openItem: Allows the user to open an item if that item is openable and
+   * displays that items specific open message. If there is an item within the
+   * item the user opened, the user can now access that item
+   */
   private void openItem(Command command) {
     if (!command.hasSecondWord())
       System.out.println("What do you want to open?");
@@ -598,8 +636,10 @@ public class Game {
     }
   }
 
-  // viewInventory: Allows the user to view all items in their inventory or a
-  // specific item in their inventory
+  /*
+   * viewInventory: Allows the user to view all items in their inventory or a
+   * specific item in their inventory
+   */
   private void viewInventory(Command command) {
     if (!command.hasSecondWord())
       System.out.println("What do you want to view?");
@@ -645,8 +685,8 @@ public class Game {
   }
 
   /*
-   * dropItem: Allows the user to remove an item from their inventory and drop it
-   * into the current room
+   * releasePokemon: Allows the user to remove a pokemon from their inventory and
+   * drop it into the current room and adds a pokeball to the user's inventory
    */
   private void releasePokemon(Command command) {
     if (!command.hasSecondWord())
@@ -693,7 +733,7 @@ public class Game {
           System.out.println("There is no item with that name that you can see");
       } else {
         Item item = currentRoom.getItem(index);
-        if (inventory.getTotalWeight() + item.getWeight() > inventory.getMaxWeight())
+        if (inventory.getTotalWeight() + item.getWeight() > 6)
           System.out.println("You do not have enough room in your inventory for this item");
         else {
           currentRoom.removeItem(item);
@@ -705,7 +745,7 @@ public class Game {
   }
 
   /*
-   * PrintYell: Allows the user to simulate yelling
+   * PrintYell: Allows the user to simulate yelling by printing a message
    */
   private void printYell(Command command) {
     if (command.hasSecondWord())
@@ -715,20 +755,19 @@ public class Game {
     System.out.println("Feel better?");
   }
 
-  // implementations of user commands:
   /**
-   * Print out some help information. Prints the goal of the game
-   * and a list of the command words.
+   * printHelp: Prints the goal of the game and a list of the command words.
    */
   private void printHelp() {
-    System.out.println("Hello brave hero\nYour goal is to try and find the three starter pokemon and bring them to the top of the volcano\n\n");
+    System.out.println(
+        "Hello brave hero\nYour goal is to try and find the three starter pokemon and bring them to the top of the volcano\n\n");
     System.out.println("Your command words are:");
     parser.showCommands();
   }
 
   /*
-   * specialCases: Checks for special cases in which something needs to be added to the end of a
-   * room description
+   * specialCases: Checks for special cases in which something needs to be added
+   * to the end of a room description
    */
   public String specialCases() {
     String currentRoomName = currentRoom.getRoomName();
@@ -750,13 +789,13 @@ public class Game {
         return "There is a winding path up to the peak of the volcano";
       else
         return "There is a pile of rocks blocking the path up to the peak of the volcano";
-    } if(currentRoomName.equals("Outside Building")){
-        if(currentRoom.getItem(currentRoom.itemInRoom("tree")).getIsOpened())
-          return "There is an open path to a parking lot in the south";
-        else
-          return "In the north you see a tree blocking your path to a parking lot.";
     }
-    else if (currentRoom.getRoomName().equals("East Side of Island")
+    if (currentRoomName.equals("Outside Building")) {
+      if (currentRoom.getItem(currentRoom.itemInRoom("tree")).getIsOpened())
+        return "There is an open path to a parking lot in the south";
+      else
+        return "In the south you see a tree blocking your path to a parking lot.";
+    } else if (currentRoom.getRoomName().equals("East Side of Island")
         && currentRoom.getItem(currentRoom.itemInRoom("door")).getIsOpened())
       return ("There is a hole in the ground with a staircase leading down");
     else
@@ -764,7 +803,7 @@ public class Game {
   }
 
   /**
-   * Try to go to one direction. If there is an exit, enter the new room,
+   * goRoom: Try to go to one direction. If there is an exit, enter the new room,
    * otherwise print an error message.
    */
   private void goRoom(Command command) {
@@ -776,8 +815,10 @@ public class Game {
     String direction = command.getSecondWord();
     // Try to leave current room.
     Room nextRoom = currentRoom.nextRoom(direction);
-    // Checks for specific cases where the user must possess an item in order to
-    // move from one room to another
+    /*
+     * Checks for specific cases where the user must possess an item, have a keypad
+     * unlocked or have a switch turned on in order to move from one room to another
+     */
     if (nextRoom == null)
       System.out.println("There is no path leading that direction");
     else {
@@ -813,7 +854,7 @@ public class Game {
         if (!currentRoom.getIsLit())
           System.out.println(currentRoom.darkDescription());
         else
-          System.out.println(currentRoom.longDescription() + specialCases());
+          System.out.println(currentRoom.description() + specialCases());
       }
     }
   }

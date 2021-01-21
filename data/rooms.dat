@@ -1,5 +1,5 @@
 Room Name: Base of Volcano
-Room Description:  You are at the base of a large volcano, with ashes scattered all ove the floor. There are paths heading east and south.
+Room Description:  You are at the base of a large volcano, with ashes scattered all over the ground. There are paths heading east and south.
 Exit Rooms: E-Forest, S-Outside Building, U-Top of Volcano
 Room Name: Top of Volcano
 Room Description: You are standing at the peak of a large volcano, looking down at the city below you. There is a path heading down.
@@ -8,7 +8,7 @@ Room Name: Forest
 Room Description: You are in a huge forest, with trees surrounding you in all directions. A path leads both east and west. A ladder hangs from the base of one of the trees.
 Exit Rooms: W-Base of Volcano, U-North Tree Top, E-Field
 Room Name: North Tree Top
-Room Description:  You standing on a small wooden platform on top of a tree. There is a couch and table sitting on the platform. There is a bridge leading south.
+Room Description:  You standing on a small wooden platform on top of a tree. There is a couch and table sitting on the platform. There is a bridge leading south and a ladder leading down.
 Exit Rooms: D-Forest, S-east Hut
 Room Name: East Hut
 Room Description: You are standing in a small wooden hut. There are bridges leading north and west.
@@ -20,46 +20,46 @@ Room Name: West Hut
 Room Description: You are standing in a small wooden hut with a chest sitting in the corner. There are bridges leading north and east.
 Exit Rooms: N-Dark Room, E-Center of Bridge
 Room Name: Dark Room
-Room Description: You are standing in a dark room, the only light source coming from a dim fire in the center of the room. There is a switch bolted to the wall.
+Room Description: You are standing in a dark room, the only light source coming from a dim fire in the center of the room and the sun from the south exit. There is a switch bolted to the wall.
 Exit Rooms: S-West Hut
 Room Name: Field
-Room Description: You are in a field with a path west. There is a sign sitting in front of you.
+Room Description: You are in a open field with a path west. There is a sign sitting in front of you.
 Exit Rooms: W-Forest, E-Beach
 Room Name: Beach
-Room Description: You are standing on a sandy beach with a sign on it. In the south, you spot a lake containing a large island in the center.
+Room Description: You are standing on a sandy beach with a sign on it. In the south, you spot a lake containing a large island in the center and in the west you see a bright field
 Exit Rooms: W-Field
 Room Name: Outside Building
-Room Description: You are outside of a blue building in the west with no door. There is a mailbox next to the door.
+Room Description: You are outside of a blue building in the west with no door. There is a mailbox next to the door. There is a path north.
 Exit Rooms: N-Base of Volcano, S-Parking lot, W-Inside Building
 Room Name: Parking Lot
-Room Description: You are in an empty parking lot, with only one car in the lot that appears to have it's trunk unlocked.
+Room Description: You are in an empty parking lot, with only one car in the lot that appears to have it's trunk unlocked. There is a path north.
 Exit Rooms: N-Outside Building
 Room Name: Hidden Hut
-Room Description: You are in the center of a small wooden hut, with a strange engraving on the ceiling. There is a door with a keypad beside it on the east wall.
+Room Description: You are in the center of a small wooden hut, with a strange engraving on the ceiling. There is a door with a keypad beside it on the east wall. There is an exit north.
 Exit Rooms: N-Center of Bridge, E-South Tree Top
 Room Name: South Tree Top
-Room Description: You are on a wooden platform on top of a large tree. There is a bridge leading south and a ladder down.
+Room Description: You are on a wooden platform on top of a large tree. There is a an exit west.
 Exit Rooms: W-Hidden Hut
 Room Name: Inside Building
 Room Description: You are inside of a white, empty one story building with a wooden floor. There is a staircase leading down into a cave.
 Exit Rooms: E-Outside Building, D-Cave Entrance
 Room Name: Cave Entrance
-Room Description: You are standing in the entrance to a large cave. There are paths leading west and south
+Room Description: You are standing in the entrance to a large cave. There are paths leading west, south and up
 Exit Rooms: S-Center of Cave, U-Inside Building, W-North Dead End
 Room Name: North Dead End
-Room Description: You are standing at a dead end of the cave. There is a strange engraving on the wall.
+Room Description: You are standing at a dead end of the cave with an exit east. There is a strange engraving on the wall.
 Exit Rooms: E-Cave Entrance
 Room Name: Center of Cave
 Room Description: You are standing in the center of a cave. There are tunnels heading north and west.
 Exit Rooms: W-South Dead End, N-Cave Entrance
 Room Name: South Dead End
-Room Description: You arrive at a dead end of the cave. There is a keypad on the west wall.
+Room Description: You arrive at a dead end of the cave with an exit east. There is a keypad on the west wall.
 Exit Rooms: W-Secret Layer, E-Center of Cave
 Room Name: Secret Layer
-Room Description: You are standing in an eerie, dim room with dust all over the cave floor. There is a bright light coming from the south.
+Room Description: You are standing in an eerie, dim room with dust all over the cave floor. There is an exit east and a bright light coming from the south.
 Exit Rooms: S-Stone Cavern, E-South Dead End
 Room Name: Stone Cavern
-Room Description: You are standing in a stone cavern. There is a path leading north.
+Room Description: You are standing in a candle lit stone cavern. There is a path leading north.
 Exit Rooms: N-Secret Layer
 Room Name: North West Corner of Library
 Room Description: You are standing in the north-west corner of a huge library. There are paths leading east, west and south.
@@ -74,7 +74,7 @@ Room Name: North East Corner of Library
 Room Description: You are standing in the North east corner of a huge library. There are paths leading west and south.
 Exit Rooms: W-North West Corner of Library, S-South East Corner of Library
 Room Name: Dusty Attic
-Room Description: You emerge in a tiny attic filled with dust. There is a path leading down.
+Room Description: You emerge in a tiny attic filled with dust. There is a wooden staircase going down.
 Exit Rooms: D-South East Corner of Library
 Room Name: North Side of Island
 Room Description: You are on the north side of a huge island with a sign stuck in the sand. There is a tree filled with coconuts in front of you. There is a path leading south.
